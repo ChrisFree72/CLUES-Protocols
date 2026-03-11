@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digestion Methods Protocol Aid</title>
+<style>
+  :root {
+    --primary: #6b1a1a;
+    --accent: #b52a2a;
+    --light: #faf0f0;
+    --warn: #7a4a1a;
+    --warn-bg: #fdf5ec;
+    --note: #2a7a4a;
+    --note-bg: #ecf7f0;
+    --info: #1a3a6b;
+    --info-bg: #ecf0fd;
+    --border: #e8c5c5;
+    --text: #1a1a1a;
+    --muted: #555;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #fbf4f4; color: var(--text); }
+
+  header { background: var(--primary); color: white; padding: 28px 40px 20px; border-bottom: 4px solid var(--accent); }
+  header h1 { font-size: 1.6rem; letter-spacing: 0.5px; }
+  header p { font-size: 0.88rem; color: #e0b0b0; margin-top: 6px; }
+
+  nav { background: var(--accent); display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 40px; }
+  nav a { color: white; text-decoration: none; font-size: 0.82rem; padding: 5px 14px; border-radius: 20px; background: rgba(255,255,255,0.15); transition: background 0.2s; }
+  nav a:hover { background: rgba(255,255,255,0.3); }
+
+  main { max-width: 960px; margin: 30px auto; padding: 0 24px 60px; }
+
+  .section { background: white; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 28px; overflow: hidden; }
+  .section-header { background: var(--primary); color: white; padding: 14px 22px; display: flex; align-items: center; gap: 10px; }
+  .section-header .icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.05rem; letter-spacing: 0.3px; }
+  .section-body { padding: 22px; }
+
+  .reagent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .reagent-card { background: var(--light); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .reagent-card h4 { font-size: 0.88rem; color: var(--accent); margin-bottom: 8px; font-weight: 700; }
+  .reagent-card ol { padding-left: 18px; font-size: 0.86rem; line-height: 1.6; color: var(--muted); }
+  .reagent-card .yield { display: inline-block; margin-top: 8px; background: var(--primary); color: white; font-size: 0.75rem; padding: 2px 10px; border-radius: 10px; }
+
+  .steps { counter-reset: step; list-style: none; }
+  .steps li { counter-increment: step; display: flex; gap: 14px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #f5e8e8; font-size: 0.9rem; line-height: 1.55; }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { content: counter(step); background: var(--accent); color: white; min-width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: bold; flex-shrink: 0; margin-top: 1px; }
+
+  .warn-box { background: var(--warn-bg); border-left: 4px solid var(--warn); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 0.87rem; color: #5a3010; }
+  .warn-box strong { display: block; margin-bottom: 4px; font-size: 0.92rem; }
+  .note-box { background: var(--note-bg); border-left: 4px solid var(--note); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 0.87rem; color: #1a4a2e; }
+  .note-box strong { display: block; margin-bottom: 4px; }
+  .info-box { background: var(--info-bg); border-left: 4px solid var(--info); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 0.87rem; color: #1a2a4a; }
+  .info-box strong { display: block; margin-bottom: 4px; }
+
+  .tab-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .tab-btn { background: var(--light); border: 1px solid var(--border); border-radius: 20px; padding: 6px 18px; font-size: 0.85rem; cursor: pointer; color: var(--primary); transition: all 0.2s; }
+  .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  h3.subsection { font-size: 0.95rem; color: var(--primary); margin: 18px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  th { background: var(--primary); color: white; padding: 10px 14px; text-align: left; }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--light); }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 0.78rem; font-weight: bold; }
+  .badge-fast { background: #d4edda; color: #155724; }
+  .badge-med { background: #fff3cd; color: #856404; }
+  .badge-slow { background: #f8d7da; color: #721c24; }
+  .badge-tissue { background: #e8d4ed; color: #4a1560; }
+  .badge-fluid { background: #d4e8ed; color: #104a56; }
+  .badge-both { background: #ede8d4; color: #4a3a10; }
+
+  .phase-block { background: var(--light); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .phase-block h4 { font-size: 0.85rem; color: var(--primary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.4px; display: flex; align-items: center; gap: 8px; }
+  .phase-tag { background: var(--accent); color: white; font-size: 0.72rem; padding: 2px 8px; border-radius: 8px; text-transform: none; letter-spacing: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔬 Digestion Methods — Protocol Aid</h1>
+  <p>Reference document covering solvent preparation and three digestion approaches for biological samples. To be used alongside full protocol documentation.</p>
+</header>
+
+<nav>
+  <a href="#solvents">Solvent Preparation</a>
+  <a href="#methods">Digestion Methods</a>
+  <a href="#filtration">Filtration</a>
+  <a href="#summary">Quick Reference</a>
+</nav>
+
+<main>
+
+  <!-- SOLVENT PREP -->
+  <div class="section" id="solvents">
+    <div class="section-header"><span class="icon">🧴</span><h2>Solvent & Reagent Preparation</h2></div>
+    <div class="section-body">
+      <div class="warn-box">
+        <strong>⚠️ KOH Preparation Warning</strong>
+        KOH dissolution in water is highly exothermic. Always add KOH pellets to water slowly — never add water to pellets. Mix slowly and allow to cool before use. Work in a fume hood with appropriate PPE.
+      </div>
+      <div class="warn-box">
+        <strong>⚠️ Hydrogen Peroxide Warning</strong>
+        30% hydrogen peroxide is a strong oxidizer. Handle with care, avoid skin contact, and work in a fume hood. Do not cap tubes tightly immediately after adding to samples — gas evolution can pressurize containers.
+      </div>
+      <div class="reagent-grid">
+
+        <div class="reagent-card">
+          <h4>20% w/v KOH — 500mL</h4>
+          <ol>
+            <li>Weigh 100g of KOH pellets and transfer to a 500mL glass vessel.</li>
+            <li>Slowly add 500mL of filtered HPLC grade water.</li>
+            <li>Cap with a glass stopper and mix slowly until the solution is transparent.</li>
+          </ol>
+          <span class="yield">Used in: Method 1 (MAD)</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>5% w/v KOH — 500mL</h4>
+          <ol>
+            <li>Weigh 25g of KOH pellets and transfer to a 500mL glass vessel.</li>
+            <li>Slowly add 500mL of filtered HPLC grade water.</li>
+            <li>Cap with a glass stopper and mix slowly until the solution is transparent.</li>
+          </ol>
+          <span class="yield">Used in: Method 2 (Mild KOH) · pH adjustment</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>0.1% Tween-20 — 100mL</h4>
+          <ol>
+            <li>Pipet 100µL of Tween-20 into a 100mL glass vessel.</li>
+            <li>Slowly add 100mL of filtered HPLC grade water.</li>
+            <li>Cap with a glass stopper and mix slowly until the solution is transparent.</li>
+          </ol>
+          <span class="yield">Used in: Methods 1 & 2</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>Rinse Solution</h4>
+          <ol>
+            <li>Add 100mL of filtered HPLC grade water to a 250mL glass vessel.</li>
+            <li>Add 100mL of IPA to the same vessel.</li>
+            <li>Cap and mix thoroughly.</li>
+          </ol>
+          <span class="yield">Used in: All methods (filtration step)</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>8–10 pH Solution — 100mL</h4>
+          <ol>
+            <li>Add 100mL of filtered HPLC grade water to a glass vessel.</li>
+            <li>Add 5% KOH dropwise while monitoring pH continuously.</li>
+            <li>Stop addition when pH is between 8 and 10.</li>
+          </ol>
+          <span class="yield">Used in: Proteinase K · CaCl₂ · CREON preparation</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>400mM Tris-HCl (pH 8.0) — 250mL</h4>
+          <ol>
+            <li>Add 100mL of 1M Tris-HCl to 150mL of filtered water and mix.</li>
+            <li>Check pH and adjust to 8.0 if needed.</li>
+          </ol>
+          <span class="yield">Used in: Methods 3 & 4 (Enzymatic)</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>1mg/mL Proteinase K</h4>
+          <ol>
+            <li>Weigh 1–10mg of proteinase K.</li>
+            <li>Add an equal volume in mL of 8–10 pH solution (e.g., 5mg → 5mL).</li>
+            <li>Mix gently until fully dissolved.</li>
+          </ol>
+          <span class="yield">Used in: Methods 3 & 4 (Enzymatic)</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>5mM CaCl₂ — 100mL</h4>
+          <ol>
+            <li>Weigh 55.5mg of CaCl₂.</li>
+            <li>Transfer to a glass vessel containing 100mL of 8–10 pH solution.</li>
+            <li>Mix until fully dissolved.</li>
+          </ol>
+          <span class="yield">Used in: Methods 3 & 4 (Enzymatic)</span>
+        </div>
+
+        <div class="reagent-card">
+          <h4>2.5% CREON Enzyme Solution — 10mL</h4>
+          <ol>
+            <li>Transfer 240mg of CREON pellets to a glass vessel containing 10mL of 8–10 pH solution.</li>
+            <li>Allow to sit for approximately 1 hour.</li>
+            <li>Sonicate lightly until the pellets are fully dissolved.</li>
+          </ol>
+          <span class="yield">Used in: Methods 3 & 4 (Enzymatic)</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DIGESTION METHODS -->
+  <div class="section" id="methods">
+    <div class="section-header"><span class="icon">⚗️</span><h2>Digestion Methods</h2></div>
+    <div class="section-body">
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="showTab('mad')">Method 1 — Strong KOH MAD</button>
+        <button class="tab-btn" onclick="showTab('mild')">Method 2 — Mild KOH</button>
+        <button class="tab-btn" onclick="showTab('enzyme-peroxide')">Method 3 — Enzymatic w/ Peroxide</button>
+        <button class="tab-btn" onclick="showTab('enzyme-noperoxide')">Method 4 — Enzymatic (In-House)</button>
+      </div>
+
+      <!-- METHOD 1 -->
+      <div class="tab-panel active" id="tab-mad">
+        <div class="info-box">
+          <strong>📌 Strong KOH Microwave Assisted Digestion (MAD)</strong>
+          Best suited for tissue samples. Uses high-concentration KOH with microwave-assisted heating for rapid, aggressive digestion. An overnight incubation follows the microwave step before filtration.
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 1 — Sample Setup <span class="phase-tag">Bench</span></h4>
+          <ol class="steps">
+            <li>Weigh 1g of tissue sample and transfer to a 20mL test tube.</li>
+            <li>Add 5mL of 20% KOH using a glass pipet.</li>
+            <li>Add 1mL of 0.1% Tween-20.</li>
+            <li>Add 1mL of pure ethanol.</li>
+            <li>Vortex thoroughly to ensure the digestion mixture is well combined.</li>
+          </ol>
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 2 — Microwave Digestion <span class="phase-tag">Microwave</span></h4>
+          <ol class="steps">
+            <li>Place each 20mL tube into a microwave vessel and cap securely.</li>
+            <li>Load the microwave vessel compartment into the microwave.</li>
+            <li>Run the <strong>35-minute microwave digestion protocol</strong>.</li>
+            <li>Allow samples to sit <strong>overnight</strong> before proceeding to filtration.</li>
+          </ol>
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 3 — Post-Digestion <span class="phase-tag">Bench</span></h4>
+          <ol class="steps">
+            <li>Remove tubes from the microwave vessel compartment and individual vessels.</li>
+            <li>Transfer samples to the prep room for filtration.</li>
+          </ol>
+        </div>
+
+        <div class="note-box">
+          <strong>➡️ Proceed to Filtration — 47mm filter / 15-minute rinse protocol</strong>
+          See the Filtration section. MAD samples use 47mm GF/F filters with a 15-minute rinse hold time.
+        </div>
+      </div>
+
+      <!-- METHOD 2 -->
+      <div class="tab-panel" id="tab-mild">
+        <div class="info-box">
+          <strong>📌 Mild KOH Digestion</strong>
+          Suitable for both biological fluids (1mL) and tissue samples (1g). Uses lower-concentration KOH with a shake incubator at 30°C over 24 hours. A gentler approach than MAD, compatible with a wider range of sample types.
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 1 — Sample Setup <span class="phase-tag">Bench</span></h4>
+          <ol class="steps">
+            <li>Transfer <strong>1mL of biological fluid</strong> or weigh <strong>1g of tissue</strong> into a 20mL test tube.</li>
+            <li>Add 5mL of 5% KOH using a glass pipet.</li>
+            <li>Add 1mL of 0.1% Tween-20.</li>
+            <li>Add 1mL of pure ethanol.</li>
+            <li>Vortex thoroughly to ensure the digestion mixture is well combined.</li>
+          </ol>
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 2 — Shake Incubation <span class="phase-tag">Incubator</span></h4>
+          <ol class="steps">
+            <li>Place the 20mL tubes into the shake incubator.</li>
+            <li>Incubate at <strong>30°C, 180 rpm for 24 hours</strong>.</li>
+            <li>Remove tubes from the shake incubator upon completion.</li>
+            <li>Transfer samples to the prep room for filtration.</li>
+          </ol>
+        </div>
+
+        <div class="note-box">
+          <strong>➡️ Proceed to Filtration — 47mm or 25mm filter protocol</strong>
+          See the Filtration section. Rinse hold time is <strong>30 seconds for biological fluids</strong> and <strong>15 minutes for tissue samples</strong>.
+        </div>
+      </div>
+
+      <!-- METHOD 3 -->
+      <div class="tab-panel" id="tab-enzyme-peroxide">
+        <div class="info-box">
+          <strong>📌 Enzymatic Digestion with Peroxide Cleanup (Rauert 2025)</strong>
+          Suitable for both biological fluids (1mL) and tissue samples (1g). Multi-step enzymatic digestion followed by hydrogen peroxide oxidative cleanup. Longest protocol — approximately 52+ hours total.
+        </div>
+        <div class="warn-box">
+          <strong>⚠️ Hydrogen Peroxide Step</strong>
+          30% H₂O₂ is added during this protocol. Work in a fume hood at all times during this step. Do not seal tubes tightly immediately after addition and monitor for excessive gas evolution.
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 1 — Initial Incubation <span class="phase-tag">Incubator</span></h4>
+          <ol class="steps">
+            <li>Transfer <strong>1mL of biological fluid</strong> or weigh <strong>1g of tissue</strong> into a 20mL test tube.</li>
+            <li>Add 10mL of 400mM Tris-HCl solution.</li>
+            <li>Incubate at <strong>60°C in the shake incubator for 1 hour</strong>.</li>
+            <li>Remove tubes and allow the solution to cool to room temperature before proceeding.</li>
+          </ol>
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 2 — Proteinase K Digestion <span class="phase-tag">Incubator</span></h4>
+          <ol class="steps">
+            <li>Add 1mL of 5mM CaCl₂ solution to each tube.</li>
+            <li>Add 100µL of 1mg/mL Proteinase K solution to each tube.</li>
+            <li>Shake incubate at <strong>37°C for 2 hours</strong>.</li>
+          </ol>
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 3 — CREON Enzyme Digestion <span class="phase-tag">Incubator</span></h4>
+          <ol class="steps">
+            <li>Adjust the pH of each sample to <strong>10</strong> using 5% KOH added dropwise.</li>
+            <li>Add 2mL of 2.5% CREON enzyme solution to each tube.</li>
+            <li>Incubate at <strong>37°C for 3 hours</strong>.</li>
+          </ol>
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 4 — Hydrogen Peroxide Oxidative Cleanup <span class="phase-tag">Fume Hood</span></h4>
+          <ol class="steps">
+            <li>In the fume hood, add 8mL of <strong>30% hydrogen peroxide</strong> to each tube.</li>
+            <li>Leave tubes loosely capped and digest at <strong>room temperature, 180 rpm for 48 hours</strong>.</li>
+            <li>Heat samples to <strong>60°C</strong> prior to filtration.</li>
+            <li>Remove tubes from the shake incubator and transfer to the prep room for filtration.</li>
+          </ol>
+        </div>
+
+        <div class="note-box">
+          <strong>➡️ Proceed to Filtration — 47mm or 25mm filter protocol</strong>
+          Rinse hold time is <strong>30 seconds for biological fluids</strong> and <strong>15 minutes for tissue samples</strong>.
+        </div>
+      </div>
+
+      <!-- METHOD 4 -->
+      <div class="tab-panel" id="tab-enzyme-noperoxide">
+        <div class="info-box">
+          <strong>📌 Enzymatic Digestion — In-House (No Peroxide)</strong>
+          Suitable for both biological fluids (1mL) and tissue samples (1g). Simplified enzymatic digestion without the hydrogen peroxide oxidative cleanup step. Approximately 51+ hours total.
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 1 — Initial Incubation <span class="phase-tag">Incubator</span></h4>
+          <ol class="steps">
+            <li>Transfer <strong>1mL of biological fluid</strong> or weigh <strong>1g of tissue</strong> into a 20mL test tube.</li>
+            <li>Add 10mL of 400mM Tris-HCl solution.</li>
+            <li>Incubate at <strong>60°C in the shake incubator for 1 hour</strong>.</li>
+            <li>Remove tubes and allow the solution to cool to room temperature before proceeding.</li>
+          </ol>
+        </div>
+
+        <div class="phase-block">
+          <h4>Phase 2 — Proteinase K + CREON Digestion <span class="phase-tag">Incubator</span></h4>
+          <ol class="steps">
+            <li>Add 1mL of 5mM CaCl₂ solution to each tube.</li>
+            <li>Add 100µL of 1mg/mL Proteinase K solution to each tube.</li>
+            <li>Add 2mL of 2.5% CREON enzyme solution to each tube.</li>
+            <li>Digest at <strong>37°C, 180 rpm for 48 hours</strong>.</li>
+            <li>Heat samples to <strong>60°C</strong> prior to filtration.</li>
+            <li>Remove tubes from the shake incubator and transfer to the prep room for filtration.</li>
+          </ol>
+        </div>
+
+        <div class="note-box">
+          <strong>➡️ Proceed to Filtration — 47mm or 25mm filter protocol</strong>
+          Rinse hold time is <strong>30 seconds for biological fluids</strong> and <strong>15 minutes for tissue samples</strong>.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FILTRATION -->
+  <div class="section" id="filtration">
+    <div class="section-header"><span class="icon">🔽</span><h2>Filtration & Filter Processing</h2></div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <strong>📌 Filter Size Selection</strong>
+        Method 1 (MAD) uses <strong>47mm GF/F filters only</strong>. Methods 2, 3, and 4 may use either <strong>47mm (Millipore glass holder)</strong> or <strong>25mm (Adventec glass holder)</strong> filters depending on sample volume. Rinse hold time differs by sample type — see step 5 below.
+      </div>
+
+      <h3 class="subsection">Filter Setup</h3>
+      <ol class="steps">
+        <li>Load the appropriate GF/F filters onto the glass filter holders — 47mm filters onto Millipore 47mm holders, or 25mm filters onto Adventec 25mm holders.</li>
+        <li>Load the filter holders onto the vacuum manifold in the fume hood.</li>
+        <li>Using the Teflon squeeze bottle, soak each filter with rinse solution (water:IPA).</li>
+        <li>Turn on the vacuum and pull the rinse solution through the filter to pre-wet and condition it.</li>
+      </ol>
+
+      <h3 class="subsection">Sample Filtration</h3>
+      <ol class="steps">
+        <li>Pour the digested sample from the test tube directly into the glass filter holder.</li>
+        <li>Turn on the vacuum to pull the digest through the filter.</li>
+        <li>Add approximately 5mL of rinse solution to the empty test tube and rinse the tube walls thoroughly.</li>
+        <li>Pour the tube rinse into the glass filter holder.</li>
+        <li>Allow the rinse solution to sit on the filter for the appropriate hold time:
+          <ul style="margin-top:6px; padding-left:20px; font-size:0.88rem; color:var(--muted);">
+            <li><strong>Biological fluids:</strong> 30 seconds</li>
+            <li><strong>Tissue samples:</strong> 15 minutes</li>
+          </ul>
+          This hold time allows residual lipids and water-soluble proteins to be removed from the filter surface.
+        </li>
+        <li>Turn on the vacuum and pull the rinse solution through until the filter is completely dry.</li>
+      </ol>
+
+      <h3 class="subsection">Filter Punching & Storage</h3>
+      <ol class="steps">
+        <li>Remove the dried filter from the glass filter holder.</li>
+        <li>Punch out the appropriate number of sample discs:
+          <ul style="margin-top:6px; padding-left:20px; font-size:0.88rem; color:var(--muted);">
+            <li><strong>47mm filter:</strong> Punch 4 × 13mm discs</li>
+            <li><strong>25mm filter:</strong> Punch 1 × 15mm disc</li>
+          </ul>
+        </li>
+        <li>Fold <strong>1 × 13mm punch</strong> (or the <strong>1 × 15mm punch</strong> for 25mm filters) into a Frontier pyrolysis cup for analysis.</li>
+        <li>Store the remaining 3 × 13mm punches in a labeled 20mL scintillation vial for archiving.</li>
+      </ol>
+
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE -->
+  <div class="section" id="summary">
+    <div class="section-header"><span class="icon">⚡</span><h2>Quick Reference Summary</h2></div>
+    <div class="section-body" style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Sample Types</th>
+            <th>Key Reagents</th>
+            <th>Digestion Conditions</th>
+            <th>Filter Size</th>
+            <th>Rinse Hold</th>
+            <th>Total Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1 — Strong KOH MAD</strong></td>
+            <td><span class="badge badge-tissue">Tissue</span></td>
+            <td>20% KOH, Tween-20, EtOH</td>
+            <td>Microwave 35 min + overnight</td>
+            <td>47mm</td>
+            <td>15 min</td>
+            <td><span class="badge badge-med">~12–16 hrs</span></td>
+          </tr>
+          <tr>
+            <td><strong>2 — Mild KOH</strong></td>
+            <td><span class="badge badge-both">Tissue & Fluid</span></td>
+            <td>5% KOH, Tween-20, EtOH</td>
+            <td>30°C, 180 rpm, 24 hrs</td>
+            <td>47mm or 25mm</td>
+            <td>30 sec (fluid)<br>15 min (tissue)</td>
+            <td><span class="badge badge-med">~24 hrs</span></td>
+          </tr>
+          <tr>
+            <td><strong>3 — Enzymatic w/ Peroxide</strong></td>
+            <td><span class="badge badge-both">Tissue & Fluid</span></td>
+            <td>Tris-HCl, CaCl₂, Proteinase K, CREON, 30% H₂O₂</td>
+            <td>Multi-step: 60°C → 37°C → RT 48 hrs</td>
+            <td>47mm or 25mm</td>
+            <td>30 sec (fluid)<br>15 min (tissue)</td>
+            <td><span class="badge badge-slow">~52+ hrs</span></td>
+          </tr>
+          <tr>
+            <td><strong>4 — Enzymatic In-House</strong></td>
+            <td><span class="badge badge-both">Tissue & Fluid</span></td>
+            <td>Tris-HCl, CaCl₂, Proteinase K, CREON</td>
+            <td>60°C 1 hr → 37°C 48 hrs</td>
+            <td>47mm or 25mm</td>
+            <td>30 sec (fluid)<br>15 min (tissue)</td>
+            <td><span class="badge badge-slow">~51+ hrs</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
