@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biological Sample Storage Protocol Aid</title>
+<style>
+  :root {
+    --primary: #1a4a6b;
+    --accent: #2a7ab5;
+    --light: #e8f2fa;
+    --warn: #b54a2a;
+    --warn-bg: #fdf0ec;
+    --note: #2a7a4a;
+    --note-bg: #ecf7f0;
+    --border: #c5d8e8;
+    --text: #1a1a2e;
+    --muted: #555;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f7fb; color: var(--text); }
+
+  header { background: var(--primary); color: white; padding: 28px 40px 20px; border-bottom: 4px solid var(--accent); }
+  header h1 { font-size: 1.6rem; letter-spacing: 0.5px; }
+  header p { font-size: 0.88rem; color: #b0cce0; margin-top: 6px; }
+
+  nav { background: var(--accent); display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 40px; }
+  nav a { color: white; text-decoration: none; font-size: 0.82rem; padding: 5px 14px; border-radius: 20px; background: rgba(255,255,255,0.15); transition: background 0.2s; }
+  nav a:hover { background: rgba(255,255,255,0.3); }
+
+  main { max-width: 960px; margin: 30px auto; padding: 0 24px 60px; }
+
+  .section { background: white; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 28px; overflow: hidden; }
+  .section-header { background: var(--primary); color: white; padding: 14px 22px; display: flex; align-items: center; gap: 10px; }
+  .section-header .icon { font-size: 1.3rem; }
+  .section-header h2 { font-size: 1.05rem; letter-spacing: 0.3px; }
+  .section-body { padding: 22px; }
+
+  .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .material-item { background: var(--light); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 0.88rem; display: flex; align-items: center; gap: 8px; }
+  .material-item::before { content: "◆"; color: var(--accent); font-size: 0.6rem; }
+
+  .steps { counter-reset: step; list-style: none; }
+  .steps li { counter-increment: step; display: flex; gap: 14px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; line-height: 1.55; }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { content: counter(step); background: var(--accent); color: white; min-width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: bold; flex-shrink: 0; margin-top: 1px; }
+
+  .warn-box { background: var(--warn-bg); border-left: 4px solid var(--warn); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 0.87rem; color: var(--warn); }
+  .warn-box strong { display: block; margin-bottom: 4px; font-size: 0.92rem; }
+  .note-box { background: var(--note-bg); border-left: 4px solid var(--note); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 0.87rem; color: #1a4a2e; }
+  .note-box strong { display: block; margin-bottom: 4px; }
+  .info-box { background: #f0f4ff; border-left: 4px solid #4a6ab5; border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 0.87rem; color: #1a1a4a; }
+  .info-box strong { display: block; margin-bottom: 4px; }
+
+  .tab-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .tab-btn { background: var(--light); border: 1px solid var(--border); border-radius: 20px; padding: 6px 18px; font-size: 0.85rem; cursor: pointer; color: var(--primary); transition: all 0.2s; }
+  .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .fluid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (max-width: 600px) { .fluid-grid { grid-template-columns: 1fr; } }
+
+  .fluid-card { background: var(--light); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .fluid-card h4 { font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .fluid-card p, .fluid-card li { font-size: 0.87rem; line-height: 1.55; color: var(--muted); }
+  .fluid-card ul { padding-left: 16px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  th { background: var(--primary); color: white; padding: 10px 14px; text-align: left; }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--light); }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 0.78rem; font-weight: bold; }
+  .badge-easy { background: #d4edda; color: #155724; }
+  .badge-med { background: #fff3cd; color: #856404; }
+  .badge-hard { background: #f8d7da; color: #721c24; }
+
+  h3.subsection { font-size: 0.95rem; color: var(--primary); margin: 18px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Purchasing tab styles */
+  .purchase-category { margin-bottom: 28px; }
+  .purchase-category h3 { font-size: 0.95rem; color: var(--primary); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .product-card { background: var(--light); border: 1px solid var(--border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+  .product-card p { font-size: 0.87rem; color: var(--text); line-height: 1.45; font-weight: 500; }
+  .product-card span { font-size: 0.78rem; color: var(--muted); }
+  .product-card a { display: inline-block; margin-top: 4px; background: var(--accent); color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; align-self: flex-start; transition: background 0.2s; }
+  .product-card a:hover { background: var(--primary); }
+  .footnote { font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px; font-style: italic; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧪 Biological Sample Storage — Protocol Aid</h1>
+  <p>Reference document for aliquoting and freezing biological samples. To be used alongside full protocol documentation.</p>
+</header>
+
+<nav>
+  <a href="#materials">Materials</a>
+  <a href="#furnacing">Furnacing</a>
+  <a href="#aliquoting">Aliquoting</a>
+  <a href="#freezing">Freezing</a>
+  <a href="#fluid-notes">Fluid-Specific Notes</a>
+  <a href="#tissue">Tissue Samples</a>
+  <a href="#summary">Quick Reference</a>
+  <a href="#purchasing">Purchasing</a>
+</nav>
+
+<main>
+
+  <!-- MATERIALS -->
+  <div class="section" id="materials">
+    <div class="section-header"><span class="icon">🗂️</span><h2>Required Materials</h2></div>
+    <div class="section-body">
+      <div class="materials-grid">
+        <div class="material-item">Furnace</div>
+        <div class="material-item">5mL Serological glass Pyrex pipets</div>
+        <div class="material-item">20mL (16mm × 150mm) threaded glass test tubes</div>
+        <div class="material-item">PTFE-coated rubber caps (15-415)</div>
+        <div class="material-item">Pipet gun</div>
+        <div class="material-item">Aluminum foil</div>
+        <div class="material-item">Appropriate tube rack</div>
+        <div class="material-item">Ultrapure filtered water (stool only)</div>
+        <div class="material-item">Analytical balance (tissue only)</div>
+        <div class="material-item">Forceps / dissection tools (tissue only)</div>
+        <div class="material-item">Biohazard waste bin</div>
+      </div>
+      <div class="warn-box" style="margin-top:16px">
+        <strong>⚠️ Glassware Restriction</strong>
+        Only furnaced Pyrex test tubes and serological pipets are to be used for sample transfer, storage, and preparation. No other glassware should be used.
+      </div>
+    </div>
+  </div>
+
+  <!-- FURNACING -->
+  <div class="section" id="furnacing">
+    <div class="section-header"><span class="icon">🔥</span><h2>Furnacing Equipment</h2></div>
+    <div class="section-body">
+      <ol class="steps">
+        <li>Count the number of test tubes required based on sample volume or mass. See the Quick Reference table for per-sample tube requirements.</li>
+        <li>Place test tubes and serological pipets in the furnace for decontamination.</li>
+        <li>Run the furnace program to reach <strong>400°C</strong>, which removes manufacturing additives and contaminants from glassware.</li>
+        <li>Allow the furnace to cool to <strong>25°C</strong> before opening. Allow an additional ~30 minutes for glassware to cool fully before handling.</li>
+        <li>Furnaced glassware is now ready for use in sample transfer, storage, and preparation.</li>
+      </ol>
+      <div class="info-box" style="margin-top:14px">
+        <strong>📦 Note for Collaborators</strong>
+        Equipment purchased and shipped to our lab will be furnaced by us and sent to collaborating sites ready for use. Collaborators do not need access to a furnace. Contact us to arrange equipment preparation and shipment.
+      </div>
+    </div>
+  </div>
+
+  <!-- ALIQUOTING -->
+  <div class="section" id="aliquoting">
+    <div class="section-header"><span class="icon">🧫</span><h2>Preparing Sample Aliquots</h2></div>
+    <div class="section-body">
+
+      <h3 class="subsection">Blood & Urine — Lab Aliquoting (Storage)</h3>
+      <div class="note-box">
+        <strong>📌 Storage aliquots: Blood and Urine</strong>
+        These samples are aliquoted in the lab into storage tubes using furnaced glassware. Fill to no more than ¼ total tube volume (max 5mL per 20mL tube) to allow for freeze expansion. Urine should be transferred to storage tubes and refrigerated as quickly as possible after collection.
+      </div>
+
+      <h3 class="subsection">Blood, Urine, Saliva & Seminal Fluid — Digestion Aliquots (1mL per tube)</h3>
+      <div class="note-box">
+        <strong>📌 Digestion aliquots: Blood, Urine, Saliva, and Seminal Fluid</strong>
+        Digestion aliquots are <strong>1mL into a 20mL tube</strong>. The sample will be digested directly in this same tube — it serves as both the storage and digestion vessel. Blood and urine digestion aliquots are prepared in the lab. Saliva and seminal fluid digestion aliquots must be prepared by the collector before freezing (see below). For urine, bring to room temperature and mix thoroughly after thawing to resolubilize any crystals before digestion begins.
+      </div>
+      <ol class="steps">
+        <li>Using a furnaced serological pipet, transfer exactly <strong>1mL</strong> of sample slowly along the inner tube wall into a furnaced 20mL test tube.</li>
+        <li>Cover with aluminum foil and cap with PTFE cap.</li>
+        <li>Label clearly and proceed to pre-cooling and freezing per the Freezing section.</li>
+      </ol>
+
+      <h3 class="subsection">Saliva & Seminal Fluid — Collector Pre-Aliquoting</h3>
+      <div class="note-box">
+        <strong>📌 Applies to: Saliva and Seminal Fluid</strong>
+        These samples must be aliquoted by the collector into pre-furnished, pre-labeled tubes <em>before freezing</em>. Post-freeze pipetting of these fluids is unreliable due to viscosity changes.
+        <ul style="margin-top:6px; padding-left:18px;">
+          <li><strong>Saliva:</strong> Pipet 1mL directly into the digestion tube and seal. Refrigerate promptly.</li>
+          <li><strong>Seminal fluid:</strong> Allow the sample to liquefy at room temperature for <strong>20–60 minutes</strong> before aliquoting. Freezing before liquefaction produces a gelled, heterogeneous mass that is not workable. Once liquefied, pipet 1mL into the digestion tube, seal, and refrigerate.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection">Stool — Slurry Preparation & Aliquoting</h3>
+      <div class="note-box">
+        <strong>📌 Applies to: Stool</strong>
+        Stool is inherently heterogeneous. A slurry must be prepared before aliquoting to ensure representative sub-samples. Ultrapure filtered water must be used for slurry preparation.
+      </div>
+      <ol class="steps">
+        <li>Weigh the total stool sample mass using an analytical balance.</li>
+        <li>Add <strong>ultrapure filtered water at a ratio of 1mL water per 1g stool (1:1 w/v)</strong> to the sample container.</li>
+        <li>Mix thoroughly until the slurry is as homogeneous as possible.</li>
+        <li>Aliquot up to <strong>5mL of slurry</strong> per 20mL tube (¼ volume rule applies — slurry is largely aqueous and will expand upon freezing).</li>
+        <li>Cover with aluminum foil and cap with PTFE cap. Refrigerate immediately.</li>
+      </ol>
+      <div class="info-box">
+        <strong>💧 Filtered Water Note</strong>
+        Ultrapure filtered water for stool slurry preparation may be provided by our lab. Contact us if you require pre-filtered water to be supplied alongside your furnaced equipment.
+      </div>
+      <div class="warn-box">
+        <strong>⚠️ Gas Pressure Warning</strong>
+        Microbial activity in stool samples can generate gas even at low temperatures. Always open stool containers slowly and work in a fume hood.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FREEZING -->
+  <div class="section" id="freezing">
+    <div class="section-header"><span class="icon">❄️</span><h2>Freezing All Samples</h2></div>
+    <div class="section-body">
+      <div class="note-box">
+        <strong>📌 This procedure applies to all sample types: blood, urine, saliva, seminal fluid, stool, and tissue.</strong>
+      </div>
+      <ol class="steps">
+        <li>Ensure all tubes are sealed with aluminum foil under the PTFE cap before proceeding.</li>
+        <li>Place sealed sample tubes upright in an appropriate rack for the tube size.</li>
+        <li>Load the rack into a <strong>refrigerator or cold room for a minimum of 2 hours</strong> to pre-cool the samples gradually.</li>
+        <li>Transfer the pre-cooled rack to the <strong>−20°C freezer</strong>.</li>
+      </ol>
+      <div class="warn-box">
+        <strong>⚠️ Never Place Samples Directly in the −20°C Freezer</strong>
+        All samples must be pre-cooled in the refrigerator before transfer to −20°C. Placing biological samples directly into −20°C significantly increases the risk of glass cracking due to rapid thermal shock and freeze expansion.
+      </div>
+    </div>
+  </div>
+
+  <!-- FLUID SPECIFIC NOTES -->
+  <div class="section" id="fluid-notes">
+    <div class="section-header"><span class="icon">📋</span><h2>Fluid-Specific Storage Considerations</h2></div>
+    <div class="section-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="showTab('blood')">Blood</button>
+        <button class="tab-btn" onclick="showTab('urine')">Urine</button>
+        <button class="tab-btn" onclick="showTab('saliva')">Saliva</button>
+        <button class="tab-btn" onclick="showTab('seminal')">Seminal Fluid</button>
+        <button class="tab-btn" onclick="showTab('stool')">Stool</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-blood">
+        <div class="fluid-grid">
+          <div class="fluid-card"><h4>Container Risk</h4><p>Highest cracking risk — highly aqueous, expands significantly upon freezing. Strict ¼ volume fill rule for storage tubes. Digestion aliquots are 1mL in a 20mL tube so headspace is not a concern for those.</p></div>
+          <div class="fluid-card"><h4>Pre-freeze Handling</h4><p>Refrigerator pre-cooling for minimum 2 hours before −20°C. Lab-aliquoted using furnaced glassware.</p></div>
+          <div class="fluid-card"><h4>Digestion Notes</h4><p>Sample is digested directly in the storage tube. Ensure sample is well mixed after thawing before beginning KOH digestion.</p></div>
+          <div class="fluid-card"><h4>Special Notes</h4><p>Transfer slowly along tube wall to minimize pipet adhesion. Foil under cap on all tubes.</p></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-urine">
+        <div class="fluid-grid">
+          <div class="fluid-card"><h4>Container Risk</h4><p>Similar to blood — largely aqueous with significant freeze expansion. Apply ¼ volume fill rule (max 5mL per 20mL tube) for all storage aliquots. Digestion aliquots (1mL in 20mL) pose no expansion concern.</p></div>
+          <div class="fluid-card"><h4>Pre-freeze Handling</h4><p><strong>Refrigerate immediately after collection.</strong> Urine supports rapid bacterial growth at room temperature. Minimize delay between collection and refrigeration.</p></div>
+          <div class="fluid-card"><h4>Digestion Notes</h4><p>Crystals may form upon freezing. Bring to room temperature and mix thoroughly before sub-sampling or beginning KOH digestion to resolubilize crystals and ensure a representative aliquot.</p></div>
+          <div class="fluid-card"><h4>Special Notes</h4><p>Easiest fluid to work with overall. Aqueous nature is highly compatible with KOH digestion. Both storage and digestion aliquots are lab-prepared.</p></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-saliva">
+        <div class="fluid-grid">
+          <div class="fluid-card"><h4>Container Risk</h4><p>Lower cracking risk than blood or urine — mucin content slightly moderates expansion. Digestion aliquots (1mL in 20mL tube) pose no expansion concern.</p></div>
+          <div class="fluid-card"><h4>Pre-freeze Handling</h4><p>Must be aliquoted by collector (1mL per digestion tube) before freezing. Viscosity increases dramatically after freeze-thaw, making post-freeze pipetting unreliable. Refrigerate promptly after collection.</p></div>
+          <div class="fluid-card"><h4>Digestion Notes</h4><p>Mucin precipitation after thaw can cause heterogeneity. Vortex thoroughly before KOH digestion. Sample is digested in the same tube it was collected into.</p></div>
+          <div class="fluid-card"><h4>Special Notes</h4><p>Collector must be provided with pre-labeled, furnaced, capped tubes. Instructions must be communicated clearly in advance.</p></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-seminal">
+        <div class="fluid-grid">
+          <div class="fluid-card"><h4>Container Risk</h4><p>Lower cracking risk than aqueous samples due to high protein and lipid content dampening expansion. Digestion aliquots (1mL in 20mL) pose no expansion concern.</p></div>
+          <div class="fluid-card"><h4>Pre-freeze Handling</h4><p><strong>Critical:</strong> Must liquefy at room temperature 20–60 min before aliquoting. Freezing before liquefaction produces a gelled, non-homogeneous mass that is not workable.</p></div>
+          <div class="fluid-card"><h4>Digestion Notes</h4><p>Higher residual viscosity than other fluids. Mix thoroughly before KOH digestion. Sample is digested in the same tube it was collected into.</p></div>
+          <div class="fluid-card"><h4>Special Notes</h4><p>Most practically challenging fluid. Collector instructions regarding the liquefaction wait time must be explicit and communicated before collection.</p></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-stool">
+        <div class="fluid-grid">
+          <div class="fluid-card"><h4>Container Risk</h4><p>Freeze-expansion risk reduced by heterogeneous solid matrix. Primary container concern is <strong>gas pressure</strong> from microbial activity. Open containers slowly in a fume hood.</p></div>
+          <div class="fluid-card"><h4>Pre-freeze Handling</h4><p>Prepare 1:1 w/v slurry with ultrapure filtered water before aliquoting. Refrigerate as quickly as possible after collection. Mix until as homogeneous as possible before aliquoting.</p></div>
+          <div class="fluid-card"><h4>Digestion Notes</h4><p>Even as a slurry, stool remains the most heterogeneous sample type. Mix thoroughly after thawing before sub-sampling for digestion. Open thawed tubes slowly in a fume hood.</p></div>
+          <div class="fluid-card"><h4>Special Notes</h4><p>Most difficult sample type for representative sub-sampling. The 1:1 slurry preparation is the most effective mitigation strategy available at this step. Filtered water may be supplied by our lab.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TISSUE -->
+  <div class="section" id="tissue">
+    <div class="section-header"><span class="icon">🔬</span><h2>Tissue Samples — Breast & Placenta</h2></div>
+    <div class="section-body">
+      <div class="note-box">
+        <strong>📌 Applies to: Breast Tissue and Placental Tissue</strong>
+        Tissue samples are stored as solid pieces — no homogenization or slurry preparation is performed before freezing. Each aliquot consists of 1–5g of tissue stored in a single furnaced 20mL tube. The same furnacing, sealing, pre-cooling, and freezing procedures apply.
+      </div>
+
+      <h3 class="subsection">Tissue Aliquoting</h3>
+      <ol class="steps">
+        <li>Using furnaced forceps and scissors, section the tissue into individual aliquots of <strong>1–5g each</strong>. Verify mass using an analytical balance.</li>
+        <li>Place each tissue aliquot into a separate furnaced 20mL test tube. A single piece per tube is preferred to avoid compression or overlapping.</li>
+        <li>No liquid or buffer is added. The tube should contain only the tissue aliquot.</li>
+        <li>Cover the tube opening with a square of <strong>aluminum foil</strong>, then screw the PTFE cap on over the foil to seal.</li>
+        <li>Label each tube clearly with sample ID, tissue type, and aliquot mass.</li>
+      </ol>
+
+      <h3 class="subsection">Freezing Tissue</h3>
+      <div class="note-box">
+        <strong>📌 Same freezing procedure as all other sample types.</strong>
+        Place sealed tubes upright in a rack, pre-cool in the refrigerator for a minimum of 2 hours, then transfer to the −20°C freezer. Do not place directly in the −20°C freezer.
+      </div>
+
+      <div class="two-col" style="margin-top:14px;">
+        <div class="fluid-card">
+          <h4>Breast Tissue</h4>
+          <p>Fatty tissue with variable density. Aim for uniform aliquot sizes within a sample set where possible. Tissue does not expand upon freezing — container cracking is not a concern. The primary consideration is consistent aliquot mass for downstream digestion reproducibility.</p>
+        </div>
+        <div class="fluid-card">
+          <h4>Placental Tissue</h4>
+          <p>More vascular and heterogeneous than breast tissue. Where possible, sample from a consistent region of the placenta across subjects to reduce inter-sample variability. Excess blood should be blotted (not rinsed) from the tissue surface before weighing and aliquoting.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE -->
+  <div class="section" id="summary">
+    <div class="section-header"><span class="icon">⚡</span><h2>Quick Reference Summary</h2></div>
+    <div class="section-body" style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Sample</th>
+            <th>Aliquot Volume / Mass</th>
+            <th>Storage Fill Max</th>
+            <th>Aliquoted By</th>
+            <th>Pre-freeze Step</th>
+            <th>Key Concern</th>
+            <th>Workability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Blood</strong></td>
+            <td>1mL (digestion)<br>≤5mL (storage)</td>
+            <td>¼ tube</td>
+            <td>Lab</td>
+            <td>2 hrs refrigerator</td>
+            <td>Glass cracking from expansion</td>
+            <td><span class="badge badge-easy">Easy</span></td>
+          </tr>
+          <tr>
+            <td><strong>Urine</strong></td>
+            <td>1mL (digestion)<br>≤5mL (storage)</td>
+            <td>¼ tube</td>
+            <td>Lab</td>
+            <td>Refrigerate immediately; 2 hrs min before −20°C</td>
+            <td>Bacterial growth if delayed; crystal formation on thaw</td>
+            <td><span class="badge badge-easy">Easy</span></td>
+          </tr>
+          <tr>
+            <td><strong>Saliva</strong></td>
+            <td>1mL (digestion tube)</td>
+            <td>N/A (1mL in 20mL)</td>
+            <td>Collector</td>
+            <td>2 hrs refrigerator</td>
+            <td>Viscosity post freeze-thaw; must pre-aliquot</td>
+            <td><span class="badge badge-easy">Easy</span></td>
+          </tr>
+          <tr>
+            <td><strong>Seminal Fluid</strong></td>
+            <td>1mL (digestion tube)</td>
+            <td>N/A (1mL in 20mL)</td>
+            <td>Collector</td>
+            <td>Liquefy 20–60 min; then 2 hrs refrigerator</td>
+            <td>Must fully liquefy before aliquoting</td>
+            <td><span class="badge badge-med">Moderate</span></td>
+          </tr>
+          <tr>
+            <td><strong>Stool</strong></td>
+            <td>≤5mL slurry</td>
+            <td>¼ tube</td>
+            <td>Collector</td>
+            <td>Prepare 1:1 w/v slurry; 2 hrs refrigerator</td>
+            <td>Heterogeneity; gas pressure in container</td>
+            <td><span class="badge badge-hard">Difficult</span></td>
+          </tr>
+          <tr>
+            <td><strong>Breast Tissue</strong></td>
+            <td>1–5g per tube</td>
+            <td>1 piece per tube</td>
+            <td>Lab</td>
+            <td>2 hrs refrigerator</td>
+            <td>Consistent aliquot mass for digestion reproducibility</td>
+            <td><span class="badge badge-easy">Easy</span></td>
+          </tr>
+          <tr>
+            <td><strong>Placental Tissue</strong></td>
+            <td>1–5g per tube</td>
+            <td>1 piece per tube</td>
+            <td>Lab</td>
+            <td>2 hrs refrigerator</td>
+            <td>Blot surface blood; sample from consistent region</td>
+            <td><span class="badge badge-med">Moderate</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PURCHASING -->
+  <div class="section" id="purchasing">
+    <div class="section-header"><span class="icon">🛒</span><h2>Equipment & Supplies — Purchasing Links</h2></div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <strong>📦 Note for Collaborators</strong>
+        Equipment purchased and shipped to our lab will be furnaced by us and returned to collaborating sites ready for use. Filtered water for stool slurry preparation may also be provided by our lab. Contact us to arrange.
+      </div>
+
+      <div class="purchase-category">
+        <h3>🧪 Tubes & Storage</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <div>
+              <p>DWK Life Sciences Kimble KIMAX Reusable Glass Tubes with PTFE-Faced Screw Cap</p>
+              <span>16mm | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/kimble-kimax-reusable-glass-tubes-ptfe-faced-rubber-lined-screw-cap/p-193453" target="_blank">Buy Online →</a>
+          </div>
+          <div class="product-card">
+            <div>
+              <p>Thermo Scientific Nalgene Unwire Test Tube Racks</p>
+              <span>Resmer Manufacturing | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/nalgene-unwire-test-tube-racks/p-193321" target="_blank">Buy Online →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="purchase-category">
+        <h3>🔬 Pipetting</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <div>
+              <p>Fisherbrand Borosilicate Glass Disposable Serological Pipets — Regular Tip, Nonsterile</p>
+              <span>5mL | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/fisherbrand-borosilicate-glass-disposable-serological-pipets-regular-tip-standard-length-nonsterile/p-193387" target="_blank">Buy Online →</a>
+          </div>
+          <div class="product-card">
+            <div>
+              <p>Ali-Q 2 VS Pipet Controller</p>
+              <span>Grainger</span>
+            </div>
+            <a href="https://www.grainger.com/product/ALI-Q-2-VS-Pipet-Controller-797WZ6" target="_blank">Buy Online →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="purchase-category">
+        <h3>🩺 Tissue Dissection Tools</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <div>
+              <p>Fisherbrand Dissecting Tissue Forceps</p>
+              <span>11.4 cm | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/fisherbrand-dissecting-tissue-forceps/p-193440" target="_blank">Buy Online →</a>
+          </div>
+          <div class="product-card">
+            <div>
+              <p>Stoelting Metzenbaum Surgical Dissecting Scissors</p>
+              <span>5 in. | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/stoelting-metzenbaum-surgical-dissecting-scissors/p-193441" target="_blank">Buy Online →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="purchase-category">
+        <h3>💧 Water Filtration (Stool Slurry Preparation)</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <div>
+              <p>MilliporeSigma Classic Glass Filter Holder Kit</p>
+              <span>47mm Glass Frit Membrane Support | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/milliporesigma-classic-glass-filter-holder-kit/p-193442" target="_blank">Buy Online →</a>
+          </div>
+          <div class="product-card">
+            <div>
+              <p>Cytiva Whatman Binder-Free Glass Microfiber Filters GF/F Circles</p>
+              <span>47mm | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/whatman-binder-free-glass-microfiber-filters-gf-f-circles/p-193443" target="_blank">Buy Online →</a>
+          </div>
+          <div class="product-card">
+            <div>
+              <p>Water, Optima LC/MS Grade</p>
+              <span>2.5L | Fisher Chemical | Fisher Scientific</span>
+            </div>
+            <a href="https://www.fishersci.com/shop/products/water-optima-lc-ms-grade-fisher-chemical/p-193444" target="_blank">Buy Online →</a>
+          </div>
+        </div>
+        <p class="footnote">* Filtered water for stool slurry preparation may be provided by our lab. Contact us before purchasing if you expect this to be supplied. The filter holder and GF/F filters are used by our lab to prepare ultrapure water — collaborating sites receiving pre-supplied water do not need to purchase these items.</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
