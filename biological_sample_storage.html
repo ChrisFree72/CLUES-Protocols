@@ -85,8 +85,11 @@
   .product-card { background: var(--light); border: 1px solid var(--border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
   .product-card p { font-size: 0.87rem; color: var(--text); line-height: 1.45; font-weight: 500; }
   .product-card span { font-size: 0.78rem; color: var(--muted); }
+  .product-card .links-row { display: flex; gap: 8px; flex-wrap: wrap; }
   .product-card a { display: inline-block; margin-top: 4px; background: var(--accent); color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; align-self: flex-start; transition: background 0.2s; }
   .product-card a:hover { background: var(--primary); }
+  .product-card a.alt-link { background: var(--muted); }
+  .product-card a.alt-link:hover { background: #333; }
   .footnote { font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px; font-style: italic; }
 </style>
 </head>
@@ -141,8 +144,8 @@
       <ol class="steps">
         <li>Count the number of test tubes required based on sample volume or mass. See the Quick Reference table for per-sample tube requirements.</li>
         <li>Place test tubes and serological pipets in the furnace for decontamination.</li>
-        <li>Run the furnace program to reach 400°C, which removes manufacturing additives and contaminants from glassware.</li>
-        <li>Allow the furnace to cool to 25°C before opening. Allow an additional ~30 minutes for glassware to cool fully before handling.</li>
+        <li>Run the furnace program to reach <strong>400°C</strong>, which removes manufacturing additives and contaminants from glassware.</li>
+        <li>Allow the furnace to cool to <strong>25°C</strong> before opening. Allow an additional ~30 minutes for glassware to cool fully before handling.</li>
         <li>Furnaced glassware is now ready for use in sample transfer, storage, and preparation.</li>
       </ol>
       <div class="info-box" style="margin-top:14px">
@@ -166,14 +169,14 @@
       <h3 class="subsection">Blood, Urine, Saliva & Seminal Fluid — Digestion Aliquots (1mL per tube)</h3>
       <div class="note-box">
         <strong>📌 Digestion aliquots: Blood, Urine, Saliva, and Seminal Fluid</strong>
-        Digestion aliquots are 1mL into a 20mL tube. The sample will be digested directly in this same tube — it serves as both the storage and digestion vessel. Blood and urine digestion aliquots are prepared in the lab. Saliva and seminal fluid digestion aliquots must be prepared by the collector before freezing (see below). For urine, bring to room temperature and mix thoroughly after thawing to resolubilize any crystals before digestion begins.
+        Digestion aliquots are <strong>1mL into a 20mL tube</strong>. The sample will be digested directly in this same tube — it serves as both the storage and digestion vessel. Blood and urine digestion aliquots are prepared in the lab. Saliva and seminal fluid digestion aliquots must be prepared by the collector before freezing (see below). For urine, bring to room temperature and mix thoroughly after thawing to resolubilize any crystals before digestion begins.
       </div>
       <div class="warn-box">
-        <strong>⚠️ Digestion Aliquot Disclaimer</strong>
-        The 1mL digestion aliquot described here is intended for samples that will be digested and processed immediately upon receipt. If samples are being shipped from a collaborating site and will not be processed directly upon arrival, this aliquot type should be disregarded. In that case, refer to the standard storage aliquot instructions only.
+        <strong>⚠️ Digestion-Only Aliquots — Not for Storage</strong>
+        The 1mL aliquots described above are intended for samples that will be digested and processed as-is once received. They are not intended as general storage aliquots. This does not apply if the sample will not be processed immediately after shipment from the collaborator's site — in that case, this disclaimer can be disregarded.
       </div>
       <ol class="steps">
-        <li>Using a furnaced serological pipet, transfer exactly 1mL of sample slowly along the inner tube wall into a furnaced 20mL test tube.</li>
+        <li>Using a furnaced serological pipet, transfer exactly <strong>1mL</strong> of sample slowly along the inner tube wall into a furnaced 20mL test tube.</li>
         <li>Cover with aluminum foil and cap with the PTFE cap.</li>
         <li>Label clearly and proceed to pre-cooling and freezing per the Freezing section.</li>
       </ol>
@@ -195,9 +198,9 @@
       </div>
       <ol class="steps">
         <li>Weigh the total stool sample mass using an analytical balance.</li>
-        <li>Add ultrapure filtered water at a ratio of 1mL water per 1g stool (1:1 w/v) to the sample container.</li>
+        <li>Add <strong>ultrapure filtered water at a ratio of 1mL water per 1g stool (1:1 w/v)</strong> to the sample container.</li>
         <li>Mix thoroughly until the slurry is as homogeneous as possible.</li>
-        <li>Aliquot up to 5mL of slurry per 20mL tube (¼ volume rule applies — slurry is largely aqueous and will expand upon freezing).</li>
+        <li>Aliquot up to <strong>5mL of slurry</strong> per 20mL tube (¼ volume rule applies — slurry is largely aqueous and will expand upon freezing).</li>
         <li>Cover with aluminum foil, cap with the PTFE cap, and refrigerate immediately.</li>
       </ol>
       <div class="info-box">
@@ -222,8 +225,8 @@
       <ol class="steps">
         <li>Ensure all tubes are sealed with aluminum foil under the PTFE cap before proceeding.</li>
         <li>Place sealed sample tubes upright in an appropriate rack for the tube size.</li>
-        <li>Load the rack into a refrigerator or cold room for a minimum of 2 hours to pre-cool the samples gradually.</li>
-        <li>Transfer the pre-cooled rack to the −20°C freezer.</li>
+        <li>Load the rack into a <strong>refrigerator or cold room for a minimum of 2 hours</strong> to pre-cool the samples gradually.</li>
+        <li>Transfer the pre-cooled rack to the <strong>−20°C freezer</strong>.</li>
       </ol>
       <div class="warn-box">
         <strong>⚠️ Never Place Samples Directly in the −20°C Freezer</strong>
@@ -302,10 +305,10 @@
 
       <h3 class="subsection">Tissue Aliquoting</h3>
       <ol class="steps">
-        <li>Using furnaced forceps and scissors, section the tissue into individual aliquots of 1–5g each. Verify mass using an analytical balance.</li>
+        <li>Using furnaced forceps and scissors, section the tissue into individual aliquots of <strong>1–5g each</strong>. Verify mass using an analytical balance.</li>
         <li>Place each tissue aliquot into a separate furnaced 20mL test tube. A single piece per tube is preferred to avoid compression or overlapping.</li>
         <li>No liquid or buffer is added. The tube should contain only the tissue aliquot.</li>
-        <li>Cover the tube opening with a square of aluminum foil, then screw the PTFE cap on over the foil to seal.</li>
+        <li>Cover the tube opening with a square of <strong>aluminum foil</strong>, then screw the PTFE cap on over the foil to seal.</li>
         <li>Label each tube clearly with sample ID, tissue type, and aliquot mass.</li>
       </ol>
 
@@ -448,15 +451,18 @@
         <div class="product-grid">
           <div class="product-card">
             <div>
-              <p>Fisherbrand Borosilicate Glass Disposable Serological Pipets — Regular Tip, Nonsterile</p>
-              <span>5mL | Fisher Scientific</span>
+              <p>Corning Pyrex Disposable Serological Pipets</p>
+              <span>5mL | VWR (primary) — Fisher Scientific (alternate)</span>
             </div>
-            <a href="https://www.fishersci.com/shop/products/fisherbrand-borosilicate-glass-disposable-serological-pipets-regular-tip-standard-length-22/1367831H#?keyword=serological%20pipets%20glass%205ml" target="_blank">Buy Online →</a>
+            <div class="links-row">
+              <a href="https://www.vwr.com/us/en/catalog-number/53284-609" target="_blank">Buy on VWR →</a>
+              <a class="alt-link" href="https://www.fishersci.com/shop/products/pyrex-7079-pipets-4/1367634C#?keyword=corning%20pyrex%20disposable%20pipets" target="_blank">Buy on Fisher →</a>
+            </div>
           </div>
           <div class="product-card">
             <div>
-              <p>CELLTREAT Ali-Q 2 VS Pipet Controller or Equivalent</p>
-              <span>Any comparable pipet controller is acceptable. | Grainger</span>
+              <p>CELLTREAT Ali-Q 2 VS Pipet Controller (or equivalent)</p>
+              <span>Grainger</span>
             </div>
             <a href="https://www.grainger.com/product/CELLTREAT-Ali-Q-2-VS-Pipet-Controller-827P76?gucid=N:N:PS:Paid:MS:CSM-2296:LC5DTN:20500731&gclid=b96e87532adf182b1d2eeefc155ccaf6&gclsrc=3p.ds&msclkid=b96e87532adf182b1d2eeefc155ccaf6" target="_blank">Buy Online →</a>
           </div>
