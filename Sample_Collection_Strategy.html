@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microplastics & Nanoplastics — Sample Collection Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #251b38;
+    --bg: #f6f2fb;
+    --surface: #ffffff;
+    --primary: #3d2159;
+    --primary-deep: #2a1640;
+    --accent: #7c4fd1;
+    --accent-soft: #ece3fb;
+    --line: #ddd0f0;
+    --muted: #6a5d82;
+    --gold: #93641a;
+    --gold-bg: #faf3e1;
+    --sage: #2f6b4f;
+    --sage-bg: #e9f5ee;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'IBM Plex Sans', Arial, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+  h1, h2, h3 { font-family: 'Source Serif 4', Georgia, serif; color: var(--primary-deep); font-weight: 600; }
+
+  .top {
+    background: var(--primary);
+    color: #ede4fb;
+    padding: 34px 44px 30px;
+  }
+  .top h1 { color: #fff; font-size: 1.7rem; font-weight: 700; max-width: 620px; }
+  .top p { max-width: 560px; color: #cbb8ec; font-size: 0.95rem; margin-top: 10px; }
+
+  .topnav { background: var(--primary-deep); display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 44px; }
+  .topnav a { color: #ede4fb; text-decoration: none; font-size: 0.82rem; padding: 5px 14px; border-radius: 20px; background: rgba(255,255,255,0.08); }
+  .topnav a:hover { background: rgba(255,255,255,0.18); }
+
+  .layout { display: grid; grid-template-columns: 220px minmax(0, 760px); gap: 0 48px; max-width: 1040px; margin: 0 auto; padding: 36px 24px 80px; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .rail { position: static !important; order: 2; } }
+
+  .rail { position: sticky; top: 24px; align-self: start; font-size: 0.87rem; }
+  .rail a { display: block; color: var(--muted); text-decoration: none; padding: 6px 0 6px 12px; border-left: 2px solid var(--line); }
+  .rail a:hover { color: var(--accent); border-left-color: var(--accent); }
+
+  section { margin-bottom: 46px; scroll-margin-top: 20px; }
+  section h2 { font-size: 1.28rem; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 16px; }
+  section > p.lede { color: var(--muted); font-size: 0.95rem; max-width: 62ch; }
+
+  .principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  @media (max-width: 600px) { .principle-grid { grid-template-columns: 1fr; } }
+  .do, .dont {
+    border-radius: 6px; padding: 16px 18px; font-size: 0.9rem;
+  }
+  .do { background: var(--sage-bg); border-left: 3px solid var(--sage); }
+  .dont { background: var(--gold-bg); border-left: 3px solid var(--gold); }
+  .do h4 { color: var(--sage); font-size: 0.82rem; margin-bottom: 8px; }
+  .dont h4 { color: var(--gold); font-size: 0.82rem; margin-bottom: 8px; }
+  .do ul, .dont ul { padding-left: 18px; margin: 0; }
+  .do li, .dont li { margin-bottom: 6px; }
+
+  .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 14px; }
+  .material-item { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; font-size: 0.87rem; }
+
+  .steps { counter-reset: step; list-style: none; padding: 0; margin-top: 14px; }
+  .steps li { counter-increment: step; display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(step); background: var(--accent); color: white; min-width: 24px; height: 24px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.76rem; font-weight: 600; flex-shrink: 0; margin-top: 1px;
+  }
+
+  .matrix { border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; background: var(--surface); }
+  .matrix h3 { font-size: 1rem; margin-bottom: 4px; }
+  .matrix .tag { display: inline-block; font-size: 0.76rem; color: var(--accent); background: var(--accent-soft); padding: 2px 10px; border-radius: 10px; margin-bottom: 10px; }
+  .matrix p { font-size: 0.89rem; margin: 6px 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 14px; }
+  th { background: var(--primary); color: white; padding: 9px 12px; text-align: left; font-weight: 500; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--accent-soft); }
+
+  .callout { border-radius: 6px; padding: 14px 18px; font-size: 0.88rem; margin: 16px 0; }
+  .callout.gold { background: var(--gold-bg); border-left: 3px solid var(--gold); color: #5c3f10; }
+  .callout.sage { background: var(--sage-bg); border-left: 3px solid var(--sage); color: #1f4a35; }
+  .callout strong { display: block; margin-bottom: 4px; }
+
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 14px; }
+  .product-card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px; font-size: 0.87rem; display: flex; flex-direction: column; gap: 8px; }
+  .product-card .cat { display: block; color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+  .product-card .links-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .product-card a { display: inline-block; background: var(--accent); color: white; text-decoration: none; padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; align-self: flex-start; }
+  .product-card a.alt-link { background: var(--muted); }
+  .footnote { font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--line); margin-top: 14px; padding-top: 10px; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Sample Collection for Microplastics &amp; Nanoplastics Analysis</h1>
+  <p>Every plastic particle counted downstream has to have actually come from the sample. This guide covers what a collection kit needs, and how to keep contamination out from the moment a sample is touched to the moment it reaches the lab.</p>
+</div>
+
+<nav class="topnav">
+  <a href="#why">Why it matters</a>
+  <a href="#chain">The clean chain</a>
+  <a href="#prep">Personal prep</a>
+  <a href="#materials">Kit materials</a>
+  <a href="#blanks">Blanks &amp; controls</a>
+  <a href="#matrices">Collection by matrix</a>
+  <a href="#storage">Storage &amp; transport</a>
+  <a href="#custody">Vial labeling</a>
+  <a href="#reference">Quick reference</a>
+  <a href="#purchasing">Purchasing</a>
+</nav>
+
+<div class="layout">
+  <nav class="rail">
+    <a href="#why">Why it matters</a>
+    <a href="#chain">The clean chain</a>
+    <a href="#prep">Personal prep</a>
+    <a href="#materials">Kit materials</a>
+    <a href="#blanks">Blanks &amp; controls</a>
+    <a href="#matrices">Collection by matrix</a>
+    <a href="#storage">Storage &amp; transport</a>
+    <a href="#custody">Vial labeling</a>
+    <a href="#reference">Quick reference</a>
+    <a href="#purchasing">Purchasing</a>
+  </nav>
+
+  <main>
+
+    <section id="why">
+      <h2>Why contamination control matters</h2>
+      <p class="lede">Microplastics and nanoplastics are everywhere synthetic textiles, plastic labware, and even the ambient air have been shown to shed particles onto a sample. Unlike most analyte classes, the background level here is not zero — it's whatever a collection site and its collectors are wearing that day. A result is only meaningful if it can be shown to sit above that background, which means contamination control isn't a preamble to the protocol. It <em>is</em> the protocol.</p>
+    </section>
+
+    <section id="chain">
+      <h2>The clean chain</h2>
+      <p class="lede">Think of every step between the sample and the analyzer as a link. One uncontrolled link — a synthetic glove, an open bench, an unlidded tube in a breeze — can undo everything done correctly at every other step.</p>
+      <div class="principle-grid">
+        <div class="do">
+          <h4>Keep</h4>
+          <ul>
+            <li>Glass, metal, and unglazed ceramic in contact with sample</li>
+            <li>Cotton or wool outer layers for collectors</li>
+            <li>Lids and covers on containers at every idle moment</li>
+            <li>A field blank and a procedural blank for every batch</li>
+          </ul>
+        </div>
+        <div class="dont">
+          <h4>Keep out</h4>
+          <ul>
+            <li>Plastic caps, tubing, funnels, or squeeze bottles</li>
+            <li>Synthetic fleece, polyester, or nylon near open samples</li>
+            <li>Aerosol sprays and perfumed products on collection day</li>
+            <li>Uncovered samples in moving air, indoors or out</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="prep">
+      <h2>Personal preparation</h2>
+      <p class="lede">Collectors are the single largest contamination source in most microplastics studies. Preparation happens before anyone touches a sample.</p>
+      <ol class="steps">
+        <li>Wear 100% cotton or linen clothing and a cotton lab coat. Avoid fleece, polyester blends, and treated rain gear entirely on collection days.</li>
+        <li>Use clean room gloves with no powder, coating, or other additives, rinsed with filtered water immediately before donning.</li>
+        <li>Tie back hair and avoid synthetic hair accessories; a cotton cap or hairnet is preferred for extended sessions.</li>
+        <li>Skip fragranced soap, lotion, or spray deodorant the morning of collection — these carry microplastic carriers and fibers.</li>
+        <li>Keep phones, notebooks, and bags away from the immediate collection area; use a dedicated clipboard or waterproof cotton-paper log instead.</li>
+      </ol>
+    </section>
+
+    <section id="materials">
+      <h2>Kit materials</h2>
+      <p class="lede">Anything that will touch the sample, or sit open near it, has to be glass, metal, or another inert material — never plastic. All glassware, including filtration equipment, is furnaced before use, the same as the biological sample storage protocol.</p>
+      <div class="materials-grid">
+        <div class="material-item">Furnaced 16 × 150mm and 20 × 150mm Kimax glass vials, foil-lined caps</div>
+        <div class="material-item">Stainless steel scoops, forceps, spatulas</div>
+        <div class="material-item">Furnaced glass funnels and stirring rods</div>
+        <div class="material-item">Aluminum foil (for covering, never wrapping directly on wet sample)</div>
+        <div class="material-item">Filtered water for rinsing tools between samples</div>
+        <div class="material-item">Furnaced glass fiber filters for on-site filtration</div>
+        <div class="material-item">Field logbook (cotton paper or waterproof card, not laminated plastic)</div>
+      </div>
+      <div class="callout gold">
+        <strong>Furnaced glass only</strong>
+        Every vial, funnel, and filter that contacts a sample must be furnaced beforehand, exactly as in the biological sample storage protocol. Furnaced glass has reduced structural integrity, so handle it gently and never assume it can take the thermal or physical stress that untreated glass can.
+      </div>
+      <div class="callout gold">
+        <strong>No plastic, no exceptions</strong>
+        This includes plastic-coated clipboards, plastic ruler/scale bars left near open samples, and single-use plastic weigh boats. If a plastic tool is unavoidable for a measurement step, it should never contact the sample directly.
+      </div>
+    </section>
+
+    <section id="blanks">
+      <h2>Blanks &amp; controls</h2>
+      <p class="lede">Blanks are what let a result be trusted. Every site, every day, and every batch needs its own.</p>
+      <div class="callout sage">
+        <strong>Field blank</strong>
+        A furnaced vial left open at the collection site for the same duration as active collection, then capped and processed identically to a real sample. Captures airborne and site-specific contamination.
+      </div>
+      <div class="callout sage">
+        <strong>Procedural blank</strong>
+        Carried through every step of handling, transfer, and storage — but never actually opened at the field site. Captures contamination introduced by tools, containers, and lab handling.
+      </div>
+      <div class="callout gold">
+        <strong>Minimum frequency</strong>
+        At least one field blank and one procedural blank per collection day.
+      </div>
+    </section>
+
+    <section id="matrices">
+      <h2>Collection by matrix</h2>
+      <p class="lede">The core clean-chain principles apply everywhere; each matrix adds its own handling detail.</p>
+
+      <div class="matrix">
+        <span class="tag">Liquid (water, biological fluid)</span>
+        <h3>Water &amp; biofluids</h3>
+        <p>Collect directly into a furnaced Kimax vial — never dip a plastic container first and transfer. Fill no more than <strong>¼ of the tube volume</strong>, the same limit used for the biological storage protocol: these are furnaced tubes with reduced structural integrity, and overfilling risks cracking on top of the usual freeze-expansion concern. Cap immediately with a foil-lined lid.</p>
+        <p>If on-site filtration is required, use a furnaced glass vacuum filter holder with a furnaced glass fiber filter; stainless steel filter housings are also acceptable. Rinse the filtration setup with filtered water between samples and run a filtration blank alongside real samples.</p>
+      </div>
+
+      <div class="matrix">
+        <span class="tag">Air / settled dust</span>
+        <h3>Airborne &amp; deposited particles</h3>
+        <p>Use a furnaced glass funnel and a furnaced collection vial for passive deposition sampling; secure with foil rather than the cap during active collection to allow airflow, then cap fully once the collection period ends.</p>
+      </div>
+
+      <div class="matrix">
+        <span class="tag">Solid (sediment, soil, tissue)</span>
+        <h3>Sediment, soil &amp; tissue</h3>
+        <p>Use stainless steel scoops or furnaced forceps to transfer directly into a furnaced vial. Avoid rinsing solid samples with tap water; use filtered water only if rinsing is required. Where a sample must be homogenized in the field, use a furnaced glass or stainless steel vessel, never a plastic container.</p>
+      </div>
+    </section>
+
+    <section id="storage">
+      <h2>Storage &amp; transport</h2>
+      <ol class="steps">
+        <li>Cap every vial with a foil-lined, non-plastic-contact lid immediately after collection.</li>
+        <li>Keep capped vials upright in their tube rack for transport and shipment back to the lab, chilled — not inside plastic tubs or bags.</li>
+        <li>Refrigerate or freeze samples according to the matrix's stability requirements as soon as possible after collection; avoid leaving samples in a warm vehicle.</li>
+        <li>Store blanks alongside their matched samples at every stage — never batch all blanks together separately from the samples they're meant to represent.</li>
+      </ol>
+      <div class="callout sage">
+        <strong>Sample-type storage details</strong>
+        For pre-cooling times, freezer temperatures, and fluid-specific handling once a vial reaches the lab, see the <a href="https://chrisfree72.github.io/CLUES-Protocols/biological_sample_storage.html">biological sample storage protocol aid</a> — the furnacing, sealing, and freezing steps there apply directly to these vials.
+      </div>
+    </section>
+
+    <section id="custody">
+      <h2>Vial labeling</h2>
+      <p class="lede">Keep the label simple: every vial needs a sample ID, date collected, and mass and/or volume.</p>
+      <div class="materials-grid">
+        <div class="material-item">Sample ID</div>
+        <div class="material-item">Date collected</div>
+        <div class="material-item">Mass and/or volume</div>
+      </div>
+    </section>
+
+    <section id="reference">
+      <h2>Quick reference</h2>
+      <table>
+        <thead>
+          <tr><th>Matrix</th><th>Primary contact material</th><th>Site handling note</th><th>Blank type</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Water / biofluid</td><td>Furnaced Kimax vial</td><td>Fill ¼ tube volume max; foil-lined cap immediately</td><td>Field + procedural</td></tr>
+          <tr><td>Air / settled dust</td><td>Furnaced vial + furnaced glass funnel</td><td>Foil cover during active collection</td><td>Field</td></tr>
+          <tr><td>Sediment / soil</td><td>Steel scoop, furnaced vial</td><td>No tap-water rinse</td><td>Procedural</td></tr>
+          <tr><td>Tissue</td><td>Furnaced forceps, furnaced vial</td><td>No plastic surface contact at any step</td><td>Procedural</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="purchasing">
+      <h2>Purchasing</h2>
+      <p class="lede">Links pulled from the biological sample storage site where the same item is used there. Send over the rest and I'll add them in the same way.</p>
+      <div class="product-grid">
+        <div class="product-card">
+          Kimax 16 × 150mm &amp; 20 × 150mm glass vials, PTFE-faced caps
+          <span class="cat">Fisher Scientific</span>
+          <a href="https://www.fishersci.com/shop/products/kimax-reusable-tubes-ptfe-faced-rubber-lined-screw-cap-8/1493010F#?keyword=kimax%2020mL%20tubes%20w/%20PTFE%20lined%20cap" target="_blank">Buy Online →</a>
+        </div>
+        <div class="product-card">
+          Tube rack (for transport &amp; shipment)
+          <span class="cat">Thermo Scientific Nalgene | Fisher Scientific</span>
+          <a href="https://www.fishersci.com/shop/products/nalgene-unwire-test-tube-racks-resmer-manufacturing-technology/1480962" target="_blank">Buy Online →</a>
+        </div>
+        <div class="product-card">
+          Forceps
+          <span class="cat">Fisherbrand | Fisher Scientific</span>
+          <a href="https://www.fishersci.com/shop/products/fisherbrand-dissecting-tissue-forceps-4/1381241#?keyword=tissue%20forceps" target="_blank">Buy Online →</a>
+        </div>
+        <div class="product-card">
+          Stainless steel scoops &amp; spatulas
+          <span class="cat">15-Piece Scoop &amp; Spatula Set | Fisher Scientific</span>
+          <a href="https://www.fishersci.com/shop/products/15-piece-scoop-spatula-set/S012308#?keyword=stainless%20steel%20spatula%20set" target="_blank">Buy Online →</a>
+        </div>
+        <div class="product-card">
+          Glass vacuum filter holder (furnace before use)
+          <span class="cat">Fisher Scientific</span>
+          <a href="https://www.fishersci.com/shop/products/glass-vacuum-filter-holder-47mm-3/XX1014700#?keyword=glass%20filtration" target="_blank">Buy Online →</a>
+        </div>
+        <div class="product-card">
+          GF/F glass fiber filters (furnace before use)
+          <span class="cat">Cytiva Whatman | Fisher Scientific</span>
+          <a href="https://www.fishersci.com/shop/products/whatman-binder-free-glass-microfiber-filters-gf-f-circles/0987471#?keyword=whatman%20glass%20fiber%200.7um%20glass%20filters" target="_blank">Buy Online →</a>
+        </div>
+        <div class="product-card">
+          Filtered water, Optima LC/MS grade
+          <span class="cat">Fisher Chemical | Fisher Scientific</span>
+          <a href="https://www.fishersci.com/shop/products/water-optima-lc-ms-grade-fisher-chemical/W6212#?keyword=lc-ms%20water" target="_blank">Buy Online →</a>
+        </div>
+        <div class="product-card">
+          Clean room gloves (additive-free)
+          <span class="cat">Kimtech G3 EvT Prime, Non-Sterile, Powder-Free</span>
+          <div class="links-row">
+            <a href="https://www.tequipment.net/Kimberly-Clark/Kimtech-G3-EVT-P-Glove/Cleanroom-Gloves/" target="_blank">Buy on TEquipment →</a>
+            <a class="alt-link" href="https://www.fishersci.com/shop/products/kimtech-g3-evt-prime-nitrile-gloves-5/17000348#?keyword=kimtech%20g3%20evt%20prime%20cleanroom" target="_blank">Buy on Fisher →</a>
+          </div>
+        </div>
+        <div class="product-card">
+          Cotton lab coats
+          <span class="cat">not yet linked — send a preferred SKU</span>
+        </div>
+      </div>
+      <p class="footnote">As with the biological sample storage site, equipment can be furnaced and pre-checked by the lab before shipment to collaborating sites on request.</p>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
