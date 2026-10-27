@@ -119,7 +119,7 @@ footer .wrap{padding-top:1.25rem;padding-bottom:2rem;font-size:.9rem;color:var(-
   <div class="wrap">
     <p class="kicker">CLUES Protocols · LC-MS sample prep</p>
     <h1>Tissue extraction for LC-MS</h1>
-    <p class="lede">Bead-beater homogenization in 3:1 acetonitrile/methanol, then aliquoting for C18 or HILIC runs. Tick each step off as you go; your progress stays on this device.</p>
+    <p class="lede">Bead-beater homogenization in 60:40 methanol/acetonitrile, then aliquoting for C18 or HILIC runs. Tick each step off as you go; your progress stays on this device.</p>
   </div>
 </header>
 
@@ -136,11 +136,11 @@ footer .wrap{padding-top:1.25rem;padding-bottom:2rem;font-size:.9rem;color:var(-
         <input id="count" type="number" inputmode="numeric" min="1" step="1" value="1">
       </div>
       <div class="result" aria-live="polite">
-        <span class="big" id="perVial">600 µL</span>
-        <span class="sub">3:1 ACN/MeOH per vial</span>
+        <span class="big" id="perVial">400 µL</span>
+        <span class="sub">60:40 MeOH/ACN per vial</span>
       </div>
       <div class="result" aria-live="polite">
-        <span class="big" id="total">0.60 mL</span>
+        <span class="big" id="total">400 µL</span>
         <span class="sub">total solvent for the batch</span>
       </div>
     </div>
@@ -168,8 +168,8 @@ footer .wrap{padding-top:1.25rem;padding-bottom:2rem;font-size:.9rem;color:var(-
       </label></li>
       <li><label class="step">
         <span class="num" aria-hidden="true"></span>
-        <span class="text"><p>Add 3:1 acetonitrile/methanol extraction solvent at 30 µL per mg of tissue. A 20 mg sample gets 600 µL; use the calculator above for other masses.</p>
-          <span class="chips"><span class="chip">30 µL / mg</span><span class="chip">3:1 ACN/MeOH</span></span></span>
+        <span class="text"><p>Add 60:40 methanol/acetonitrile extraction solvent at 20 µL per mg of tissue. A 20 mg sample gets 400 µL; use the calculator above for other masses.</p>
+          <span class="chips"><span class="chip">20 µL / mg</span><span class="chip">60:40 MeOH/ACN</span></span></span>
         <input type="checkbox"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </label></li>
       <li><label class="step">
@@ -269,7 +269,7 @@ footer .wrap{padding-top:1.25rem;padding-bottom:2rem;font-size:.9rem;color:var(-
     var m=parseFloat(mass.value), n=parseInt(count.value,10);
     if(!(m>0)){perVial.textContent='—';total.textContent='—';note.classList.remove('show');return;}
     if(!(n>0)) n=1;
-    var v=m*30;
+    var v=m*20;
     perVial.textContent=(Math.round(v*10)/10)+' µL';
     var t=v*n;
     total.textContent=t>=1000?(t/1000).toFixed(2)+' mL':(Math.round(t*10)/10)+' µL';
