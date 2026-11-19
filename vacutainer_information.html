@@ -84,8 +84,9 @@
   .study-fit h2, .study-lede { text-align: center; margin-left: auto; margin-right: auto; }
   .fit-table { max-width: 44rem; margin: 0 auto; }
   .fit-table th, .fit-table td { text-align: center; }
-  .fit-table th:first-child, .fit-table td:first-child { text-align: left; }
-  .fit-notes { max-width: 60rem; margin-left: auto; margin-right: auto; }
+  .fit-notes { max-width: 60rem; margin-left: auto; margin-right: auto; text-align: center; }
+  .fit-notes p { margin-left: auto; margin-right: auto; }
+  @media (max-width: 40rem) { .fit-table td { justify-items: center; } }
   .fit { display: inline-block; font-size: .82rem; font-weight: 600; padding: .15rem .6rem; border-radius: 999px; }
   .fit.good { background: var(--fit-good-bg); color: var(--fit-good-fg); }
   .fit.ok   { background: var(--phasing-bg);  color: var(--phasing-fg); }
@@ -149,6 +150,17 @@
     tr { border: 1px solid var(--line); border-radius: 8px; margin-bottom: .75rem; padding: .35rem 0; background: var(--surface); }
     td { border: 0; padding: .3rem .9rem; display: grid; grid-template-columns: 7rem 1fr; gap: .5rem; }
     td::before { content: attr(data-label); color: var(--muted); font-size: .85rem; }
+  }
+
+  /* Centered layout across the whole page */
+  header.intro, .anticoag, .additive, footer { text-align: center; }
+  h1, header.intro .lede, .anticoag-lede, .anticoag-foot, .additive-head p, .note, footer p { margin-left: auto; margin-right: auto; }
+  .anticoag-list > div { border-left: 0; border-top: 4px solid var(--cap); padding: .9rem 0 0; }
+  .glass-pick { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 1.25rem; }
+  .additive-head { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .additive th, .additive td { text-align: center; }
+  @media (max-width: 40rem) {
+    .additive td { grid-template-columns: 1fr; justify-items: center; gap: .1rem; }
   }
 </style>
 </head>
