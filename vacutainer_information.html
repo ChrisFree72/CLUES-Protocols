@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blood Collection Tubes: Glass and Plastic Options | CLUES Protocols</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBFAFD;
+    --surface: #FFFFFF;
+    --ink: #221C2E;
+    --muted: #5E5670;
+    --line: #DDD5EA;
+    --plum: #4A2A7A;
+    --plum-soft: #EFE9F8;
+    --discontinued-bg: #FBE9EC; --discontinued-fg: #8E2B3B;
+    --phasing-bg: #FFF2DC;      --phasing-fg: #8A5300;
+    --plastic-bg: #E8F1F6;      --plastic-fg: #245873;
+    --fit-good-bg: #E3F3EA;     --fit-good-fg: #1F6B43;
+    --cap-acd: #E8C21A;
+    --cap-hep: #2E8B57;
+    --cap-edta: #9B7FD4;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #17131F; --surface: #211B2C; --ink: #EEE9F6; --muted: #B3A9C6;
+      --line: #3A3149; --plum: #C9B2F0; --plum-soft: #2C2340;
+      --discontinued-bg: #3D1C24; --discontinued-fg: #F3AAB6;
+      --phasing-bg: #3A2B12;      --phasing-fg: #F5C77A;
+      --plastic-bg: #16303D;      --plastic-fg: #9CCFE6;
+      --fit-good-bg: #173A28;     --fit-good-fg: #9FDDB8;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #17131F; --surface: #211B2C; --ink: #EEE9F6; --muted: #B3A9C6;
+    --line: #3A3149; --plum: #C9B2F0; --plum-soft: #2C2340;
+    --discontinued-bg: #3D1C24; --discontinued-fg: #F3AAB6;
+    --phasing-bg: #3A2B12;      --phasing-fg: #F5C77A;
+    --plastic-bg: #16303D;      --plastic-fg: #9CCFE6;
+      --fit-good-bg: #173A28;     --fit-good-fg: #9FDDB8;
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 400 1rem/1.6 "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  a { color: var(--plum); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--plum); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.intro { padding: 3.5rem 0 2rem; }
+  header.intro p.crumb { margin: 0 0 1rem; font-size: .9rem; color: var(--muted); }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 700; line-height: 1.15; }
+  h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 1rem; max-width: 18ch; letter-spacing: -.01em; }
+  header.intro .lede { max-width: 60ch; color: var(--muted); font-size: 1.08rem; margin: 0; }
+
+  /* Anticoagulant explainer */
+  .anticoag { padding: 1rem 0 0; }
+  .anticoag h2 { font-size: 1.4rem; margin: 0 0 .5rem; }
+  .anticoag-lede, .anticoag-foot { max-width: 64ch; margin: 0 0 1.25rem; color: var(--muted); }
+  .anticoag-foot { font-size: .92rem; margin: 1.25rem 0 0; }
+  .anticoag-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin: 0; }
+  .anticoag-list > div { border-left: 4px solid var(--cap); padding-left: 1rem; }
+  .anticoag-list dt { font-weight: 600; margin-bottom: .3rem; }
+  .anticoag-list dd { margin: 0; font-size: .94rem; line-height: 1.55; }
+  .anticoag-list dd.footnote { margin-top: .6rem; font-size: .84rem; color: var(--muted); }
+  @media (max-width: 52rem) { .anticoag-list { grid-template-columns: 1fr; } }
+
+  /* Study fit */
+  .study-fit { padding: 2.5rem 0 0; }
+  .study-fit h2 { font-size: 1.4rem; margin: 0 0 .5rem; }
+  .study-lede { max-width: 64ch; margin: 0 0 1.25rem; color: var(--muted); }
+  .fit-table { max-width: 44rem; }
+  .fit { display: inline-block; font-size: .82rem; font-weight: 600; padding: .15rem .6rem; border-radius: 999px; }
+  .fit.good { background: var(--fit-good-bg); color: var(--fit-good-fg); }
+  .fit.ok   { background: var(--phasing-bg);  color: var(--phasing-fg); }
+  .fit.bad  { background: var(--discontinued-bg); color: var(--discontinued-fg); }
+  .fit-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin-top: 1.5rem; }
+  .fit-notes h3 { margin-top: 0; }
+  .fit-notes p { font-size: .94rem; margin: 0 0 .75rem; max-width: 62ch; }
+  @media (max-width: 52rem) { .fit-notes { grid-template-columns: 1fr; gap: .5rem; } }
+
+  /* Top strip: the three glass tubes */
+  .glass-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 3.5rem; }
+  .glass-pick {
+    position: relative; display: grid; grid-template-columns: 2.2rem 1fr; gap: 1rem; align-items: start;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.25rem 1.25rem 1.25rem 1rem;
+  }
+  .glass-pick h2 { font-size: 1.25rem; margin: 0 0 .35rem; }
+  .glass-pick p { margin: 0 0 .75rem; color: var(--muted); font-size: .92rem; }
+  .buy { display: inline-block; font-weight: 600; text-decoration: none; padding: .5rem .9rem; border-radius: 6px;
+         background: var(--plum); color: var(--paper); }
+  .buy:hover { text-decoration: underline; }
+  .jump { display: block; margin-top: .6rem; font-size: .88rem; }
+
+  /* Drawn tube: the page's one signature element */
+  .tube { width: 2.2rem; height: 6.2rem; display: block; }
+  .tube .cap { fill: var(--cap); }
+  .tube .body { fill: none; stroke: var(--muted); stroke-width: 1.4; }
+  .tube .fill { fill: var(--cap); opacity: .22; }
+
+  .status { display: inline-block; font-size: .78rem; font-weight: 600; padding: .15rem .55rem; border-radius: 999px; white-space: nowrap; }
+  .status.discontinued { background: var(--discontinued-bg); color: var(--discontinued-fg); }
+  .status.phasing      { background: var(--phasing-bg); color: var(--phasing-fg); }
+  .status.plastic      { background: var(--plastic-bg); color: var(--plastic-fg); }
+
+  /* Additive sections */
+  section.additive { border-top: 1px solid var(--line); padding: 2.75rem 0; }
+  .additive-head { display: grid; grid-template-columns: 2.2rem 1fr; gap: 1rem; align-items: center; margin-bottom: 1.25rem; }
+  .additive-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0; }
+  .additive-head p { margin: .25rem 0 0; color: var(--muted); max-width: 62ch; }
+  h3 { font-size: 1.1rem; margin: 1.75rem 0 .6rem; }
+  .note { background: var(--plum-soft); border-radius: 8px; padding: .75rem 1rem; font-size: .92rem; max-width: 62ch; margin: 1rem 0 0; }
+
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th { text-align: left; font-weight: 600; color: var(--muted); font-size: .85rem; padding: .5rem .75rem; border-bottom: 2px solid var(--line); }
+  td { padding: .8rem .75rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr.glass-row td { background: var(--surface); }
+  td.price { font-weight: 600; white-space: nowrap; }
+  td .tbd { color: var(--muted); font-weight: 400; font-style: italic; }
+  td small.also { color: var(--muted); font-size: .82rem; line-height: 1.4; }
+  .empty { color: var(--muted); font-style: italic; padding: .8rem .75rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .88rem; }
+
+  @media (max-width: 52rem) {
+    .glass-strip { grid-template-columns: 1fr; }
+  }
+  /* Stack table rows on phones */
+  @media (max-width: 40rem) {
+    thead { display: none; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tr { border: 1px solid var(--line); border-radius: 8px; margin-bottom: .75rem; padding: .35rem 0; background: var(--surface); }
+    td { border: 0; padding: .3rem .9rem; display: grid; grid-template-columns: 7rem 1fr; gap: .5rem; }
+    td::before { content: attr(data-label); color: var(--muted); font-size: .85rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="intro">
+    <h1>Blood collection tubes: glass and plastic options</h1>
+    <p class="lede">Glass tubes for ACD-B, sodium heparin, and EDTA are going away. Order the glass versions below while Fisher Scientific still stocks them, and use the plastic options listed in each section once they’re gone.</p>
+  </header>
+
+  <section class="anticoag" aria-labelledby="anticoag-h">
+    <h2 id="anticoag-h">How the anticoagulants work</h2>
+    <p class="anticoag-lede">Blood clots through a cascade of clotting factors, and most steps need calcium. Each tube stops that cascade in one of two ways. None of them wear off: in a sealed, correctly filled, well-mixed tube, the blood stays unclotted with no time limit. That’s why manufacturers don’t list a clotting time for these tubes.</p>
+    <dl class="anticoag-list">
+      <div style="--cap: var(--cap-acd)">
+        <dt>ACD Solution B</dt>
+        <dd>Citrate binds calcium so the clotting cascade can’t proceed. Dextrose feeds the red and white cells and helps keep them alive. The citrate stays bound to calcium, so the blood won’t clot unless calcium is added back. <strong>Clotting prevented: indefinitely while the tube is sealed.</strong></dd>
+        <dd class="footnote">ACD-A and ACD-B are two formulations of the same anticoagulant: both contain sodium citrate, citric acid, and dextrose. ACD-B is the more dilute of the two, at roughly 60% of ACD-A’s strength. They aren’t interchangeable, so use the one your protocol specifies.</dd>
+      </div>
+      <div style="--cap: var(--cap-hep)">
+        <dt>Sodium heparin</dt>
+        <dd>Works through a different route: it boosts antithrombin, a natural inhibitor that shuts down thrombin and factor Xa. Calcium is left alone. Heparin isn’t used up in the tube, so it keeps working. <strong>Clotting prevented: indefinitely while the tube is sealed.</strong></dd>
+      </div>
+      <div style="--cap: var(--cap-edta)">
+        <dt>EDTA (K2 or K3)</dt>
+        <dd>Binds calcium very tightly, which blocks clotting and preserves cell shape well. K2EDTA is sprayed dry on the tube wall. K3EDTA is a liquid, so it dilutes the sample very slightly. The calcium stays bound, so the blood won’t clot unless calcium is added back. <strong>Clotting prevented: indefinitely while the tube is sealed.</strong></dd>
+      </div>
+    </dl>
+    <p class="anticoag-foot">Clots that do form come from the tube, not from time: underfilling, or skipping the mixing step. Invert each tube gently 8 to 10 times right after collection so the anticoagulant reaches all of the blood.</p>
+  </section>
+
+  <section class="study-fit" aria-labelledby="study-fit-h">
+    <h2 id="study-fit-h">Which tube for which study</h2>
+    <p class="study-lede">For metabolomics, the anticoagulant matters most. For microplastics, the tube material matters most. Glass K3EDTA is the one tube that works well for both, so it’s the one to stock up on while it’s still sold.</p>
+    <div class="table-scroll">
+      <table class="fit-table">
+        <thead><tr><th>Tube</th><th>Metabolomics and lipidomics</th><th>Microplastics</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Tube">EDTA, glass (K3)</td><td data-label="Metabolomics"><span class="fit good">Preferred</span></td><td data-label="Microplastics"><span class="fit good">Preferred</span></td></tr>
+          <tr><td data-label="Tube">EDTA, plastic (K2)</td><td data-label="Metabolomics"><span class="fit good">Preferred</span></td><td data-label="Microplastics"><span class="fit bad">Avoid</span></td></tr>
+          <tr><td data-label="Tube">Sodium heparin, glass</td><td data-label="Metabolomics"><span class="fit ok">Acceptable</span></td><td data-label="Microplastics"><span class="fit good">Preferred</span></td></tr>
+          <tr><td data-label="Tube">Sodium heparin, plastic</td><td data-label="Metabolomics"><span class="fit ok">Acceptable</span></td><td data-label="Microplastics"><span class="fit bad">Avoid</span></td></tr>
+          <tr><td data-label="Tube">ACD-B, glass</td><td data-label="Metabolomics"><span class="fit bad">Avoid</span></td><td data-label="Microplastics"><span class="fit ok">Acceptable</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fit-notes">
+      <div>
+        <h3>Metabolomics and lipidomics</h3>
+        <p><strong>EDTA</strong> plasma is the most widely recommended sample type. Because EDTA ties up calcium, it also slows calcium-dependent enzymes, such as some phospholipases, that keep altering lipids after the draw. EDTA itself can show up as a peak in LC-MS runs, but this is well characterized and easy to account for.</p>
+        <p><strong>Sodium heparin</strong> works, with trade-offs. It leaves calcium free, so those enzymes stay active, and the added sodium can increase sodium adducts in LC-MS. If you use it, use it for every sample in the study.</p>
+        <p><strong>ACD-B</strong> is a poor fit. Its dextrose adds glucose to the sample, citrate is itself a central metabolite in the TCA cycle, and the 1.0 mL of liquid makes up about one-sixth of the tube volume, which dilutes everything else.</p>
+      </div>
+      <div>
+        <h3>Microplastics</h3>
+        <p>The plastic tubes listed here are made of PET (polyethylene terephthalate), one of the polymers that pyrolysis GC-MS quantifies, so blood stored in them can pick up background signal. Glass tubes avoid that. Their stoppers are still rubber, so store tubes upright to limit contact with the stopper.</p>
+        <p>The anticoagulant matters less here. ACD-B is rated acceptable rather than preferred only because its liquid volume dilutes the sample. Whichever tube you use, run a tube blank from the same lot so contamination from the tube can be measured and subtracted.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="glass-strip" id="glass-strip" aria-label="Glass tube purchasing links"></nav>
+
+  <main id="sections"></main>
+
+  <footer>
+    <p>Prices and stock are from Fisher Scientific and change often. Confirm the price and catalog number on the product page before ordering.</p>
+    <p id="updated"></p>
+  </footer>
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   EDIT HERE. Each additive has one glass tube and any number of
+   plastic options. Leave a field as null and the page shows a
+   neutral placeholder instead of a wrong value.
+   url: paste the Fisher product page link. Until then, each item
+   links to a Fisher catalog search.
+------------------------------------------------------------------- */
+const LAST_UPDATED = "November 2026";
+
+const fisherSearch = q =>
+  "https://www.fishersci.com/us/en/catalog/search/products?keyword=" + encodeURIComponent(q);
+
+const ADDITIVES = [
+  {
+    id: "acd-b",
+    name: "ACD Solution B",
+    cap: "var(--cap-acd)",
+    blurb: "Acid citrate dextrose, solution B. Yellow-top tubes.",
+    note: null,
+    glass: {
+      name: "BD Vacutainer glass tube, ACD Solution B (1.0 mL), yellow",
+      status: "phasing", statusText: "Phasing out",
+      brand: "BD Vacutainer", size: "6 mL, 13 × 100 mm", packTotal: "100 tubes", price: "$438.00", catalog: "02-684-29 (BD 364816)",
+      otherSizes: ["8.5 mL (ACD-A, not ACD-B)"],
+      url: "https://www.fishersci.com/shop/products/vacutainer-glass-blood-collection-tubes-acid-citrate-dextrose-acd/0268429"
+    },
+    plastic: [],
+    noPlasticText: "There is no plastic version of the ACD Solution B tube. Stock up on the glass tube while it’s still available."
+  },
+  {
+    id: "sodium-heparin",
+    name: "Sodium heparin",
+    cap: "var(--cap-hep)",
+    blurb: "Green-top tubes for plasma collection.",
+    note: null,
+    glass: {
+      name: "BD Vacutainer glass tube, sodium heparin, green",
+      status: "discontinued", statusText: "Discontinued, still available",
+      brand: "BD Vacutainer", size: "10 mL", packTotal: "100 tubes", price: "$427.00", catalog: "02-685-3B (BD 366480)",
+      otherSizes: [],
+      url: "https://www.fishersci.com/shop/products/bd-vacutainer-glass-blood-collection-tubes-sodium-heparin/026853B"
+    },
+    plastic: [
+      { name: "BD Vacutainer plastic tube, sodium heparin (95 USP), Hemogard green", brand: "BD Vacutainer", size: "6 mL, 13 × 100 mm", packTotal: "100 tubes", price: "$218.00", catalog: "02-685-114A (BD 367878)",
+        otherSizes: ["4 mL"],
+        url: "https://www.fishersci.com/shop/products/bd-vacutainer-plastic-blood-collection-tubes-sodium-heparin-hemogard-3/02685114A" },
+      { name: "BD Vacutainer plastic tube, sodium heparin, conventional green stopper", brand: "BD Vacutainer", size: "10 mL", packTotal: "100 tubes", price: "$142.00", catalog: "02-689-6 (BD 367874)",
+        otherSizes: [],
+        url: "https://www.fishersci.com/shop/products/bd-vacutainer-plastic-blood-collection-tubes-sodium-heparin-conventional-stopper/026896" },
+      { name: "Greiner VACUETTE sodium heparin tube, green", brand: "Greiner Bio-One VACUETTE", size: "9 mL", packTotal: "50 tubes", price: "$71.00", catalog: "22-040-134 (Greiner 455051)",
+        otherSizes: ["2 mL", "4 mL", "6 mL"],
+        url: "https://www.fishersci.com/shop/products/vacuette-heparin-blood-collection-tubes/22040134" }
+    ]
+  },
+  {
+    id: "edta",
+    name: "EDTA",
+    cap: "var(--cap-edta)",
+    blurb: "Lavender-top tubes for whole blood and plasma.",
+    note: "The glass tube uses K3EDTA and the plastic tubes use K2EDTA. Either works for this protocol.",
+    glass: {
+      name: "BD Vacutainer glass tube, K3EDTA, lavender",
+      status: "phasing", statusText: "Phasing out",
+      brand: "BD Vacutainer", size: "7 mL", packTotal: "100 tubes", price: "$326.00", catalog: "02-685-2B (BD 366450)",
+      otherSizes: [],
+      url: "https://www.fishersci.com/shop/products/bd-vacutainer-glass-blood-collection-tubes-k-sub-3-sub-edta-1/026852B"
+    },
+    plastic: [
+      { name: "Greiner VACUETTE K2EDTA tube, lavender with black ring", brand: "Greiner Bio-One VACUETTE", size: "6 mL", packTotal: "50 tubes", price: "$36.00", catalog: "22-040-161 (Greiner 456002)",
+        otherSizes: ["2 mL"],
+        url: "https://www.fishersci.com/shop/products/greiner-bio-one-vacuette-coagulation-k-sub-2-sub-edta-evacuated-tubes-3/22040161" },
+      { name: "BD Vacutainer plastic tube, K2EDTA 10.8 mg, Hemogard pink (crossmatch)", brand: "BD Vacutainer", size: "6 mL, 13 × 100 mm", packTotal: "100 tubes", price: "$74.00", catalog: "13-680-61 (BD 367899)",
+        otherSizes: ["2 mL", "3 mL", "4 mL", "10 mL"],
+        url: "https://www.fishersci.com/shop/products/bd-vacutainer-plastic-blood-collection-tubes-k-sub-2-sub-edta-hemogard-closure-12/1368061" }
+    ]
+  }
+];
+
+/* ------------------------------------------------------------------ */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const val = (v, fallback) => v == null || v === "" ? `<span class="tbd">${fallback}</span>` : esc(v);
+
+function tubeSVG(cap) {
+  return `<svg class="tube" viewBox="0 0 22 62" aria-hidden="true" style="--cap:${cap}">
+    <rect class="cap" x="1" y="1" width="20" height="11" rx="2.5"/>
+    <path class="fill" d="M3.5 30 V54 a7.5 7.5 0 0 0 15 0 V30 Z"/>
+    <path class="body" d="M3.5 12 V54 a7.5 7.5 0 0 0 15 0 V12"/>
+  </svg>`;
+}
+
+// Plastic options from the same brand as the glass tube are listed first; otherwise list order is kept.
+function sameBrandFirst(items, glassBrand) {
+  if (!glassBrand) return items;
+  const match = i => i.brand === glassBrand ? 0 : 1;
+  return items.map((item, idx) => ({ item, idx }))
+    .sort((x, y) => match(x.item) - match(y.item) || x.idx - y.idx)
+    .map(x => x.item);
+}
+
+function otherSizesHTML(sizes) {
+  if (!Array.isArray(sizes)) return "";
+  return `<br><small class="also">${sizes.length ? "Also on this page: " + sizes.map(esc).join(", ") : "No other sizes listed"}</small>`;
+}
+
+function row(item, isGlass) {
+  const material = isGlass
+    ? `Glass <span class="status ${item.status}">${esc(item.statusText)}</span>`
+    : `<span class="status plastic">Plastic</span>`;
+  return `<tr class="${isGlass ? "glass-row" : ""}">
+    <td data-label="Product"><a href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.name)}</a>${item.catalog ? `<br><small>Cat. ${esc(item.catalog)}</small>` : ""}</td>
+    <td data-label="Material">${material}</td>
+    <td data-label="Size">${val(item.size, "—")}${otherSizesHTML(item.otherSizes)}</td>
+    <td data-label="Brand">${val(item.brand, "—")}</td>
+    <td data-label="Per pack">${val(item.packTotal, "—")}</td>
+    <td data-label="Price" class="price">${val(item.price, "See Fisher")}</td>
+  </tr>`;
+}
+
+function render() {
+  document.getElementById("glass-strip").innerHTML = ADDITIVES.map(a => `
+    <div class="glass-pick">
+      ${tubeSVG(a.cap)}
+      <div>
+        <h2>${esc(a.name)}</h2>
+        <p>Glass &nbsp;<span class="status ${a.glass.status}">${esc(a.glass.statusText)}</span></p>
+        <a class="buy" href="${esc(a.glass.url)}" target="_blank" rel="noopener">Buy on Fisher Scientific</a>
+        <a class="jump" href="#${a.id}">${a.plastic.length ? "See plastic options" : "No plastic option available"}</a>
+      </div>
+    </div>`).join("");
+
+  document.getElementById("sections").innerHTML = ADDITIVES.map(a => `
+    <section class="additive" id="${a.id}" aria-labelledby="${a.id}-h">
+      <div class="additive-head">
+        ${tubeSVG(a.cap)}
+        <div>
+          <h2 id="${a.id}-h">${esc(a.name)}</h2>
+          <p>${esc(a.blurb)}</p>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Product</th><th>Material</th><th>Size</th><th>Brand</th><th>Per pack</th><th>Price</th></tr></thead>
+          <tbody>
+            ${row(a.glass, true)}
+          </tbody>
+        </table>
+      </div>
+      <h3>Plastic options</h3>
+      <div class="table-scroll">
+        ${a.plastic.length ? `<table>
+          <thead><tr><th>Product</th><th>Material</th><th>Size</th><th>Brand</th><th>Per pack</th><th>Price</th></tr></thead>
+          <tbody>${sameBrandFirst(a.plastic, a.glass.brand).map(p => row(p, false)).join("")}</tbody>
+        </table>` : `<p class="empty">${esc(a.noPlasticText || "No plastic options listed yet.")}</p>`}
+      </div>
+      ${a.note ? `<p class="note">${esc(a.note)}</p>` : ""}
+    </section>`).join("");
+
+  document.getElementById("updated").textContent = "Last updated " + LAST_UPDATED + ".";
+}
+render();
+</script>
+</body>
+</html>
